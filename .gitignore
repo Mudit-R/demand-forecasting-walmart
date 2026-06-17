@@ -1,0 +1,61 @@
+# ============================================================
+# Walmart M5 Demand Forecasting — .gitignore
+# ============================================================
+
+# --- Python ---
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+eggs/
+*.whl
+pip-wheel-metadata/
+
+# --- Virtual Environments ---
+.venv/
+venv/
+ENV/
+env/
+
+# --- Jupyter Notebooks ---
+.ipynb_checkpoints/
+
+# --- IDE ---
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# --- Data (too large for Git) ---
+data/raw/
+data/processed/*.parquet
+data/processed/*.csv
+
+# --- Model Artifacts ---
+models/*.pkl
+models/*.joblib
+models/*.pt
+models/*.ckpt
+models/*.bin
+
+# --- Environment & Secrets ---
+.env
+.streamlit/secrets.toml
+
+# --- OS ---
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# --- Logs ---
+*.log
+logs/
+
+# --- Misc ---
+*.bak
+*.tmp
