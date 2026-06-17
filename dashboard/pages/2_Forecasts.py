@@ -14,7 +14,7 @@ import numpy as np
 import pandas as pd
 import streamlit as st
 
-st.set_page_config(page_title="Forecasts · Walmart M5", page_icon="🔮", layout="wide")
+st.set_page_config(page_title="Forecasts · Walmart M5", page_icon=None, layout="wide")
 
 from dashboard.components.charts import (  # noqa: E402
     PALETTE,
@@ -84,14 +84,14 @@ st.markdown(
     <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
-        🔮 Demand Forecasts
+        Demand Forecasts
     </h1>
     """,
     unsafe_allow_html=True,
 )
 
 # ── sidebar controls ────────────────────────────────────────────────────────
-st.sidebar.markdown("### ⚙️ Controls")
+st.sidebar.markdown("### Controls")
 selected_model = st.sidebar.selectbox("Model", MODELS, index=2)
 
 st.sidebar.markdown("---")
@@ -106,10 +106,9 @@ using_demo = fc is None
 if using_demo:
     fc = _demo_forecast(selected_model)
     st.warning(
-        f"⚠️ No saved forecast found for **{selected_model}**.  "
+        f"No saved forecast found for **{selected_model}**.  "
         "Showing **demo data**.  Run the training pipeline and save "
         "forecasts to `results/forecasts/<model>_forecast.csv`.",
-        icon="📂",
     )
 
 metrics = _compute_metrics(fc["actual"].values, fc["predicted"].values)
@@ -117,13 +116,13 @@ metrics = _compute_metrics(fc["actual"].values, fc["predicted"].values)
 # ── metric cards ────────────────────────────────────────────────────────────
 m_cols = st.columns(3)
 for col, (name, val) in zip(m_cols, metrics.items()):
-    icon = {"RMSE": "📐", "MAE": "📏", "MAPE": "📊"}.get(name, "📊")
+    icon = ""
     col.markdown(create_metric_card(name, str(val), icon=icon), unsafe_allow_html=True)
 
 st.markdown("<br>", unsafe_allow_html=True)
 
 # ── tabs: Forecast / Residuals / Table ──────────────────────────────────────
-tab_fc, tab_res, tab_tbl = st.tabs(["📈 Forecast", "📉 Residuals", "📋 Data Table"])
+tab_fc, tab_res, tab_tbl = st.tabs(["Forecast", "Residuals", "Data Table"])
 
 with tab_fc:
     fig = create_forecast_chart(

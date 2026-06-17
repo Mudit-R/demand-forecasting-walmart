@@ -1,4 +1,4 @@
-# 🔮 Walmart M5 Demand Forecasting — Multi-Model Forecasting System
+# Walmart M5 Demand Forecasting — Multi-Model Forecasting System
 
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -9,7 +9,7 @@
 
 ---
 
-## 📋 Overview
+## Overview
 
 An end-to-end demand forecasting system built on the **Walmart M5 Kaggle competition dataset** — one of the largest and most challenging retail forecasting benchmarks. The pipeline ingests **30,490 products** across **10 stores** spanning **1,941 days** of daily sales history, engineers rich temporal and hierarchical features, and trains **five diverse forecasting models** ranging from classical statistics to foundation models. An interactive **Streamlit dashboard** lets stakeholders explore predictions, compare model accuracy, and drill down by store, category, or individual SKU.
 
@@ -17,7 +17,7 @@ An end-to-end demand forecasting system built on the **Walmart M5 Kaggle competi
 
 ---
 
-## 🏗️ Architecture
+## Architecture
 
 ```mermaid
 flowchart LR
@@ -56,7 +56,7 @@ flowchart LR
 
 ---
 
-## 📊 Dataset
+## Dataset
 
 | Property | Value |
 |---|---|
@@ -76,7 +76,7 @@ unzip data/raw/m5-forecasting-accuracy.zip -d data/raw/
 
 ---
 
-## 🤖 Models
+## Models
 
 | # | Model | Type | Description |
 |---|---|---|---|
@@ -88,7 +88,7 @@ unzip data/raw/m5-forecasting-accuracy.zip -d data/raw/
 
 ---
 
-## 📸 Dashboard Preview
+## Dashboard Preview
 
 > Screenshots will be added after the dashboard is complete.
 
@@ -101,7 +101,7 @@ unzip data/raw/m5-forecasting-accuracy.zip -d data/raw/
 
 ---
 
-## 🚀 Installation & Setup
+## Installation & Setup
 
 ### Prerequisites
 
@@ -142,7 +142,7 @@ cd data/raw && unzip m5-forecasting-accuracy.zip && cd ../..
 
 ---
 
-## 💻 Usage
+## Usage
 
 ### Train models
 
@@ -168,7 +168,7 @@ The dashboard will open at `http://localhost:8501`.
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 demand-forecasting-walmart/
@@ -230,7 +230,7 @@ demand-forecasting-walmart/
 
 ---
 
-## 📈 Results
+## Results
 
 > *Results will be populated after model training.*
 
@@ -244,7 +244,7 @@ demand-forecasting-walmart/
 
 ---
 
-## 🛠️ Tech Stack
+## Tech Stack
 
 | Layer | Technologies |
 |---|---|
@@ -261,13 +261,13 @@ demand-forecasting-walmart/
 
 ---
 
-## 📜 License
+## License
 
 This project is licensed under the **MIT License** — see the [LICENSE](LICENSE) file for details.
 
 ---
 
-## 👤 Author
+## Author
 
 **Mudit R**
 
@@ -276,5 +276,5 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 ---
 
 <p align="center">
-  <i>Built with ☕ and curiosity — if you find this useful, consider giving it a ⭐</i>
+  <i>Built with curiosity — if you find this useful, consider giving it a star</i>
 </p>

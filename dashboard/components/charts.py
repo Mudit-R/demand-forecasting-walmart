@@ -43,7 +43,7 @@ def create_metric_card(
     title: str,
     value: str,
     delta: Optional[str] = None,
-    icon: str = "📊",
+    icon: str = "",
 ) -> str:
     """Return HTML for a single glassmorphism metric card."""
     delta_html = ""

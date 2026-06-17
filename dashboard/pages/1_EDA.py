@@ -19,7 +19,7 @@ import streamlit as st
 # ── page config ─────────────────────────────────────────────────────────────
 st.set_page_config(
     page_title="EDA · Walmart M5",
-    page_icon="📊",
+    page_icon=None,
     layout="wide",
 )
 
@@ -87,7 +87,7 @@ def _demo_sales() -> pd.DataFrame:
 # ── load data ───────────────────────────────────────────────────────────────
 sales_df = load_sales()
 if sales_df is None:
-    st.info("📂 No processed data found — showing **demo data**. "
+    st.info("No processed data found — showing **demo data**. "
             "Place your M5 data in `data/raw/` and run the preprocessing pipeline.")
     sales_df = _demo_sales()
 
@@ -101,7 +101,7 @@ if "date" in sales_df.columns:
     sales_df["date"] = pd.to_datetime(sales_df["date"])
 
 # ── sidebar filters ─────────────────────────────────────────────────────────
-st.sidebar.markdown("### 🎛️ Filters")
+st.sidebar.markdown("### Filters")
 
 store_options = sorted(sales_df["store_id"].unique()) if "store_id" in sales_df.columns else []
 selected_stores = st.sidebar.multiselect("Store", store_options, default=store_options[:3])
@@ -133,7 +133,7 @@ st.markdown(
     <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
-        📊 Exploratory Data Analysis
+        Exploratory Data Analysis
     </h1>
     """,
     unsafe_allow_html=True,

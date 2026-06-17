@@ -18,7 +18,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-st.set_page_config(page_title="Insights · Walmart M5", page_icon="🧠", layout="wide")
+st.set_page_config(page_title="Insights · Walmart M5", page_icon=None, layout="wide")
 
 from dashboard.components.charts import (  # noqa: E402
     DATA_COLOURS,
@@ -39,7 +39,7 @@ st.markdown(
     <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
-        🧠 Model Insights &amp; Interpretability
+        Model Insights &amp; Interpretability
     </h1>
     """,
     unsafe_allow_html=True,
@@ -69,7 +69,7 @@ def _placeholder(model: str, what: str) -> None:
             text-align:center;
             color:#9ca3af;
         ">
-            <p style="font-size:2.2rem;margin:0;">🔒</p>
+            <p style="font-size:1.2rem;margin:0;color:#ff6b6b;font-weight:600;">[Locked]</p>
             <p style="margin:0.5rem 0 0 0;font-size:0.95rem;">
                 <b>{what}</b> for <b>{model}</b> not available yet.<br>
                 Train the model and save artefacts to <code>models/</code>
@@ -93,7 +93,7 @@ def _load_pickle(path: pathlib.Path):
 # TABS — one per model family
 # ─────────────────────────────────────────────────────────────────────────────
 tab_lgb, tab_tft, tab_prophet, tab_sarima, tab_chronos = st.tabs(
-    ["🌳 LightGBM", "⚡ TFT", "📈 Prophet", "📊 SARIMA", "🚀 Chronos‑2"]
+    ["LightGBM", "TFT", "Prophet", "SARIMA", "Chronos‑2"]
 )
 
 # ── LightGBM ────────────────────────────────────────────────────────────────
@@ -136,7 +136,7 @@ with tab_lgb:
             "feature": demo_features,
             "importance": np.sort(np.random.default_rng(42).exponential(500, len(demo_features)))[::-1],
         }).sort_values("importance", ascending=True)
-        st.info("📂 Showing **demo** feature importance — train LightGBM to see real values.", icon="ℹ️")
+        st.info("Showing **demo** feature importance — train LightGBM to see real values.")
         fig_imp = px.bar(demo_imp, x="importance", y="feature", orientation="h",
                          color="importance",
                          color_continuous_scale=["#667eea", "#00D2FF"],
@@ -186,7 +186,7 @@ with tab_tft:
             st.dataframe(attn, use_container_width=True)
     else:
         # Demo attention weights
-        st.info("📂 Showing **demo** attention weights — train TFT to see real values.", icon="ℹ️")
+        st.info("Showing **demo** attention weights — train TFT to see real values.")
         horizons = list(range(1, 29))
         weights = np.random.default_rng(7).dirichlet(np.ones(28))
         fig_attn = go.Figure(go.Bar(
@@ -234,7 +234,7 @@ with tab_prophet:
                 st.plotly_chart(fig_p, use_container_width=True)
     else:
         # Demo weekly & yearly seasonality
-        st.info("📂 Showing **demo** seasonality — train Prophet to see real decomposition.", icon="ℹ️")
+        st.info("Showing **demo** seasonality — train Prophet to see real decomposition.")
         demo_tabs = st.tabs(["Weekly", "Yearly"])
         with demo_tabs[0]:
             days = ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"]
@@ -293,7 +293,7 @@ with tab_sarima:
                     st.plotly_chart(fig_acf, use_container_width=True)
     else:
         # Demo ACF / PACF
-        st.info("📂 Showing **demo** ACF / PACF — train SARIMA to see real diagnostics.", icon="ℹ️")
+        st.info("Showing **demo** ACF / PACF — train SARIMA to see real diagnostics.")
         rng = np.random.default_rng(99)
         lags = 40
         demo_acf = np.concatenate([[1.0], 0.7 * np.exp(-np.arange(1, lags) / 5) + rng.normal(0, 0.03, lags - 1)])
@@ -352,14 +352,14 @@ with tab_chronos:
         st.dataframe(ch, use_container_width=True)
     else:
         # Demo comparison cards
-        st.info("📂 Showing **demo** zero‑shot analysis — run Chronos‑2 inference to see real numbers.", icon="ℹ️")
+        st.info("Showing **demo** zero‑shot analysis — run Chronos‑2 inference to see real numbers.")
 
         c1, c2, c3 = st.columns(3)
-        c1.markdown(create_metric_card("Zero‑Shot RMSE", "2.72", delta="vs LightGBM: +9.7%", icon="🎯"),
+        c1.markdown(create_metric_card("Zero‑Shot RMSE", "2.72", delta="vs LightGBM: +9.7%", icon=""),
                     unsafe_allow_html=True)
-        c2.markdown(create_metric_card("Inference Time", "15 s", delta="6× faster than TFT", icon="⚡"),
+        c2.markdown(create_metric_card("Inference Time", "15 s", delta="6× faster than TFT", icon=""),
                     unsafe_allow_html=True)
-        c3.markdown(create_metric_card("No Training Data", "✓", icon="🚀"),
+        c3.markdown(create_metric_card("No Training Data", "✓", icon=""),
                     unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)

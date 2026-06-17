@@ -15,7 +15,7 @@ import streamlit as st
 # ── page config (must be the first Streamlit call) ──────────────────────────
 st.set_page_config(
     page_title="Walmart M5 Demand Forecasting",
-    page_icon="🔮",
+    page_icon=None,
     layout="wide",
     initial_sidebar_state="expanded",
 )
@@ -150,7 +150,6 @@ with st.sidebar:
     st.markdown(
         """
         <div style="text-align:center;padding:1rem 0 0.5rem 0;">
-            <span style="font-size:2.8rem;">🔮</span>
             <h2 style="margin:0.3rem 0 0 0;
                         background:linear-gradient(135deg,#667eea,#764ba2);
                         -webkit-background-clip:text;
@@ -167,7 +166,7 @@ with st.sidebar:
         unsafe_allow_html=True,
     )
 
-    st.markdown("##### 📂 Dataset Info")
+    st.markdown("##### Dataset Info")
     st.markdown(
         """
         - **Products:** 30,490  
@@ -178,7 +177,7 @@ with st.sidebar:
     )
 
     st.markdown("---")
-    st.markdown("##### 🧪 Models")
+    st.markdown("##### Models")
     st.markdown(
         """
         1. SARIMA  
@@ -195,7 +194,7 @@ with st.sidebar:
         <div style="text-align:center;padding:0.5rem 0;">
             <a href="https://github.com/Mudit-R" target="_blank"
                style="color:#667eea;text-decoration:none;font-weight:600;">
-                ⭐ GitHub — Mudit‑R
+                GitHub — Mudit‑R
             </a>
         </div>
         """,
@@ -223,10 +222,10 @@ from dashboard.components.charts import create_metric_card  # noqa: E402
 
 cols = st.columns(4)
 cards = [
-    ("Total Products", "30,490", "📦"),
-    ("Stores", "10", "🏬"),
-    ("Time Range", "1,941 days", "📅"),
-    ("Models", "5", "🧠"),
+    ("Total Products", "30,490", ""),
+    ("Stores", "10", ""),
+    ("Time Range", "1,941 days", ""),
+    ("Models", "5", ""),
 ]
 for col, (title, value, icon) in zip(cols, cards):
     col.markdown(create_metric_card(title, value, icon=icon), unsafe_allow_html=True)
@@ -269,16 +268,16 @@ st.markdown(
 
 # ── quick links ─────────────────────────────────────────────────────────────
 st.markdown(
-    "<h3 style='color:#fff;margin-bottom:0.8rem;'>🚀 Explore</h3>",
+    "<h3 style='color:#fff;margin-bottom:0.8rem;'>Explore</h3>",
     unsafe_allow_html=True,
 )
 
 link_cols = st.columns(4)
 pages = [
-    ("📊", "EDA", "Dive into sales distributions, seasonality, and correlations."),
-    ("🔮", "Forecasts", "Visualise model predictions vs actuals with confidence bands."),
-    ("📈", "Model Comparison", "Leaderboard & radar chart across all five models."),
-    ("🧠", "Insights", "Feature importance, SHAP, attention weights & more."),
+    ("", "EDA", "Dive into sales distributions, seasonality, and correlations."),
+    ("", "Forecasts", "Visualise model predictions vs actuals with confidence bands."),
+    ("", "Model Comparison", "Leaderboard & radar chart across all five models."),
+    ("", "Insights", "Feature importance, SHAP, attention weights & more."),
 ]
 for col, (icon, name, desc) in zip(link_cols, pages):
     col.markdown(
@@ -296,7 +295,7 @@ for col, (icon, name, desc) in zip(link_cols, pages):
 st.markdown(
     """
     <div style="text-align:center;padding:3rem 0 1rem 0;color:#4b5563;font-size:0.78rem;">
-        Built with ❤️ by <a href="https://github.com/Mudit-R" target="_blank"
+        Built by <a href="https://github.com/Mudit-R" target="_blank"
         style="color:#667eea;">Mudit‑R</a> &nbsp;·&nbsp;
         Streamlit + Plotly + LightGBM + NeuralForecast + Chronos‑2
     </div>

@@ -16,7 +16,7 @@ import plotly.express as px
 import plotly.graph_objects as go
 import streamlit as st
 
-st.set_page_config(page_title="Comparison · Walmart M5", page_icon="📈", layout="wide")
+st.set_page_config(page_title="Comparison · Walmart M5", page_icon=None, layout="wide")
 
 from dashboard.components.charts import (  # noqa: E402
     DATA_COLOURS,
@@ -80,7 +80,7 @@ st.markdown(
     <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
-        📈 Model Comparison Leaderboard
+        Model Comparison Leaderboard
     </h1>
     """,
     unsafe_allow_html=True,
@@ -88,10 +88,9 @@ st.markdown(
 
 if using_placeholder:
     st.info(
-        "📂 No pre‑computed metrics found in `results/metrics/`.  "
+        "No pre‑computed metrics found in `results/metrics/`.  "
         "Displaying **placeholder data** — run the evaluation pipeline to "
         "generate real results.",
-        icon="ℹ️",
     )
 
 # ── leaderboard table ──────────────────────────────────────────────────────
@@ -113,7 +112,7 @@ if err_cols:
                 f"Best {metric}",
                 f"{best_val}",
                 delta=best_model,
-                icon="🏆",
+                icon="",
             ),
             unsafe_allow_html=True,
         )
