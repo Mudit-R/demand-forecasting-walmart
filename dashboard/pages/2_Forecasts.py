@@ -81,7 +81,7 @@ def _compute_metrics(actual: np.ndarray, predicted: np.ndarray) -> dict:
 # ── title ───────────────────────────────────────────────────────────────────
 st.markdown(
     """
-    <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
+    <h1 style="background:linear-gradient(135deg,#bfa085,#8c6c53);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
         Demand Forecasts

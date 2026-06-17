@@ -36,7 +36,7 @@ RESULTS_DIR = PROJECT / "results"
 # ── title ───────────────────────────────────────────────────────────────────
 st.markdown(
     """
-    <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
+    <h1 style="background:linear-gradient(135deg,#bfa085,#8c6c53);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
         Model Insights &amp; Interpretability
@@ -121,7 +121,7 @@ with tab_lgb:
         imp_df = imp_df.sort_values("importance", ascending=True).tail(20)
         fig_imp = px.bar(imp_df, x="importance", y="feature", orientation="h",
                          color="importance",
-                         color_continuous_scale=["#667eea", "#00D2FF"],
+                         color_continuous_scale=["#8c6c53", "#bfa085"],
                          template=_THEME, labels={"importance": "Gain", "feature": ""})
         fig_imp.update_layout(showlegend=False, coloraxis_showscale=False)
         st.plotly_chart(fig_imp, use_container_width=True)
@@ -139,7 +139,7 @@ with tab_lgb:
         st.info("Showing **demo** feature importance — train LightGBM to see real values.")
         fig_imp = px.bar(demo_imp, x="importance", y="feature", orientation="h",
                          color="importance",
-                         color_continuous_scale=["#667eea", "#00D2FF"],
+                         color_continuous_scale=["#8c6c53", "#bfa085"],
                          template=_THEME, labels={"importance": "Gain", "feature": ""})
         fig_imp.update_layout(showlegend=False, coloraxis_showscale=False)
         st.plotly_chart(fig_imp, use_container_width=True)
@@ -177,7 +177,7 @@ with tab_tft:
         if "horizon" in attn.columns and "weight" in attn.columns:
             fig_attn = px.bar(attn, x="horizon", y="weight",
                               color="weight",
-                              color_continuous_scale=["#667eea", "#00D2FF"],
+                              color_continuous_scale=["#8c6c53", "#bfa085"],
                               template=_THEME,
                               labels={"horizon": "Forecast Horizon (days)", "weight": "Attention"})
             fig_attn.update_layout(coloraxis_showscale=False)
@@ -193,7 +193,7 @@ with tab_tft:
             x=horizons, y=weights,
             marker=dict(
                 color=weights,
-                colorscale=[[0, "#667eea"], [1, "#00D2FF"]],
+                colorscale=[[0, "#8c6c53"], [1, "#bfa085"]],
             ),
         ))
         fig_attn.update_layout(
@@ -209,7 +209,7 @@ with tab_tft:
     if vs_path.exists():
         vs = pd.read_csv(vs_path).sort_values("weight", ascending=True).tail(15)
         fig_vs = px.bar(vs, x="weight", y="feature", orientation="h",
-                        color="weight", color_continuous_scale=["#764ba2", "#667eea"],
+                        color="weight", color_continuous_scale=["#4d3c32", "#bfa085"],
                         template=_THEME, labels={"weight": "Selection Weight", "feature": ""})
         fig_vs.update_layout(showlegend=False, coloraxis_showscale=False)
         st.plotly_chart(fig_vs, use_container_width=True)

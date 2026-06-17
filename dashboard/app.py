@@ -24,23 +24,23 @@ st.set_page_config(
 st.markdown(
     """
     <style>
-    /* ── Google Font ───────────────────────────────── */
-    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+    /* ── Google Fonts (Inter + Playfair Display) ── */
+    @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,400..900;1,400..900&display=swap');
 
-    /* ── root variables ───────────────────────────── */
+    /* ── root variables (NextChapter palette) ── */
     :root {
-        --purple: #764ba2;
-        --blue: #667eea;
-        --teal: #00D2FF;
-        --indigo: #6B73FF;
-        --deep-blue: #000DFF;
-        --bg: #0e1117;
-        --card-bg: rgba(30, 30, 60, 0.55);
+        --purple: #8c6c53;
+        --blue: #bfa085;
+        --teal: #e6cfb3;
+        --indigo: #c5a48a;
+        --deep-blue: #4d3c32;
+        --bg: #222222;
+        --card-bg: #282828;
         --text: #e0e0e0;
-        --gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+        --border: rgba(255,255,255,0.08);
     }
 
-    /* ── global resets ────────────────────────────── */
+    /* ── global resets ── */
     html, body, [class*="st-"] {
         font-family: 'Inter', sans-serif !important;
     }
@@ -48,9 +48,15 @@ st.markdown(
         background: var(--bg);
     }
 
-    /* ── sidebar styling ──────────────────────────── */
+    /* ── headings ── */
+    h1, h2, h3, h4, h5, h6 {
+        font-family: 'Playfair Display', Georgia, serif !important;
+        font-weight: 600 !important;
+    }
+
+    /* ── sidebar styling ── */
     section[data-testid="stSidebar"] {
-        background: linear-gradient(180deg, #12122a 0%, #0e1117 100%);
+        background: linear-gradient(180deg, #1c1c1c 0%, #222222 100%);
         border-right: 1px solid rgba(255,255,255,0.05);
     }
     section[data-testid="stSidebar"] .stMarkdown p,
@@ -59,11 +65,11 @@ st.markdown(
         font-size: 0.88rem;
     }
 
-    /* ── hide Streamlit branding ──────────────────── */
+    /* ── hide Streamlit branding ── */
     #MainMenu {visibility: hidden;}
     footer {visibility: hidden;}
     header[data-testid="stHeader"] {
-        background: rgba(14,17,23,0.85);
+        background: rgba(34,34,34,0.85);
         backdrop-filter: blur(12px);
     }
 
@@ -72,7 +78,7 @@ st.markdown(
         transition: all 0.2s ease;
     }
 
-    /* ── metric cards row ─────────────────────────── */
+    /* ── metric cards row ── */
     .metric-row {
         display: flex;
         gap: 1.2rem;
@@ -83,24 +89,25 @@ st.markdown(
         flex: 1 1 200px;
     }
 
-    /* ── quick‑link cards ─────────────────────────── */
+    /* ── quick‑link cards ── */
     .ql-card {
         background: var(--card-bg);
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
-        border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px;
+        border: 1px solid var(--border);
+        border-radius: 8px;
         padding: 1.6rem;
-        transition: transform 0.25s ease, box-shadow 0.3s ease;
+        transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
         cursor: default;
     }
     .ql-card:hover {
         transform: translateY(-4px);
-        box-shadow: 0 8px 40px rgba(102,126,234,0.25);
+        border-color: var(--blue);
+        box-shadow: 0 8px 30px rgba(191,160,133,0.12);
     }
     .ql-card h4 {
+        font-family: 'Playfair Display', Georgia, serif;
         margin: 0.6rem 0 0.4rem 0;
         color: #ffffff;
+        font-size: 1.2rem;
     }
     .ql-card p {
         margin: 0;
@@ -109,32 +116,24 @@ st.markdown(
         line-height: 1.5;
     }
 
-    /* ── animated hero background ─────────────────── */
-    @keyframes gradientShift {
-        0%   { background-position: 0% 50%; }
-        50%  { background-position: 100% 50%; }
-        100% { background-position: 0% 50%; }
-    }
+    /* ── hero section (warm editorial sand) ── */
     .hero {
-        background: linear-gradient(
-            270deg, #667eea, #764ba2, #6B73FF, #00D2FF, #667eea
-        );
-        background-size: 600% 600%;
-        animation: gradientShift 12s ease infinite;
-        border-radius: 20px;
+        background: #f4ebe1;
+        border: 1px solid #bfa085;
+        border-radius: 8px;
         padding: 3rem 2.5rem;
         text-align: center;
         margin-bottom: 2rem;
     }
     .hero h1 {
+        font-family: 'Playfair Display', Georgia, serif !important;
         font-size: 2.6rem;
-        font-weight: 800;
-        color: #ffffff;
+        font-weight: 700 !important;
+        color: #222222;
         margin: 0 0 0.5rem 0;
-        text-shadow: 0 2px 20px rgba(0,0,0,0.3);
     }
     .hero p {
-        color: rgba(255,255,255,0.88);
+        color: #4e4e4e;
         font-size: 1.1rem;
         max-width: 640px;
         margin: 0 auto;
@@ -151,7 +150,7 @@ with st.sidebar:
         """
         <div style="text-align:center;padding:1rem 0 0.5rem 0;">
             <h2 style="margin:0.3rem 0 0 0;
-                        background:linear-gradient(135deg,#667eea,#764ba2);
+                        background:linear-gradient(135deg,#bfa085,#8c6c53);
                         -webkit-background-clip:text;
                         -webkit-text-fill-color:transparent;
                         font-weight:800;">
@@ -193,7 +192,7 @@ with st.sidebar:
         """
         <div style="text-align:center;padding:0.5rem 0;">
             <a href="https://github.com/Mudit-R" target="_blank"
-               style="color:#667eea;text-decoration:none;font-weight:600;">
+               style="color:#bfa085;text-decoration:none;font-weight:600;">
                 GitHub — Mudit‑R
             </a>
         </div>
@@ -236,19 +235,19 @@ st.markdown("<br>", unsafe_allow_html=True)
 st.markdown(
     """
     <div style="
-        background: rgba(30,30,60,0.45);
-        border: 1px solid rgba(255,255,255,0.06);
-        border-radius: 16px;
+        background: #282828;
+        border: 1px solid rgba(255,255,255,0.08);
+        border-radius: 8px;
         padding: 1.8rem 2rem;
         margin-bottom: 2rem;
         line-height: 1.75;
         color: #c4c4d4;
         font-size: 0.95rem;
     ">
-        <h4 style="color:#fff;margin-top:0;">About the Project</h4>
+        <h4 style="color:#fff;margin-top:0;font-family:'Playfair Display', Georgia, serif;">About the Project</h4>
         This project tackles the
         <a href="https://www.kaggle.com/c/m5-forecasting-accuracy"
-           target="_blank" style="color:#667eea;">
+           target="_blank" style="color:#bfa085;">
             Kaggle M5 Forecasting — Accuracy
         </a>
         competition.  We benchmark <b>five diverse approaches</b>:
@@ -296,7 +295,7 @@ st.markdown(
     """
     <div style="text-align:center;padding:3rem 0 1rem 0;color:#4b5563;font-size:0.78rem;">
         Built by <a href="https://github.com/Mudit-R" target="_blank"
-        style="color:#667eea;">Mudit‑R</a> &nbsp;·&nbsp;
+        style="color:#bfa085;">Mudit‑R</a> &nbsp;·&nbsp;
         Streamlit + Plotly + LightGBM + NeuralForecast + Chronos‑2
     </div>
     """,

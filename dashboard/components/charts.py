@@ -18,23 +18,28 @@ import pandas as pd
 import plotly.graph_objects as go
 import streamlit as st
 
-# ── colour palette ──────────────────────────────────────────────────────────
+# ── colour palette (NextChapter theme) ───────────────────────────────────────
 PALETTE = {
-    "purple": "#764ba2",
-    "blue": "#667eea",
-    "teal": "#00D2FF",
-    "indigo": "#6B73FF",
-    "deep_blue": "#000DFF",
-    "bg": "#0e1117",
-    "card_bg": "rgba(30, 30, 60, 0.55)",
+    "purple": "#8c6c53",      # muted bronze
+    "blue": "#bfa085",        # warm gold
+    "teal": "#e6cfb3",        # pale sand
+    "indigo": "#c5a48a",      # copper
+    "deep_blue": "#4d3c32",   # dark bronze
+    "bg": "#222222",          # warm dark charcoal
+    "card_bg": "#282828",     # card charcoal
     "text": "#e0e0e0",
-    "accent_gradient": "linear-gradient(135deg, #667eea 0%, #764ba2 100%)",
+    "accent_gradient": "#bfa085",
 }
 
 DATA_COLOURS = [
-    "#667eea", "#00D2FF", "#764ba2", "#6B73FF",
-    "#36d7b7", "#f7971e", "#ff6b6b", "#c084fc",
-    "#38bdf8", "#34d399",
+    "#bfa085",  # gold
+    "#e6cfb3",  # sand
+    "#c5a48a",  # copper
+    "#8c6c53",  # bronze
+    "#4d3c32",  # dark bronze
+    "#34d399",  # green
+    "#ff6b6b",  # red
+    "#764ba2",  # purple
 ]
 
 
@@ -59,14 +64,12 @@ def create_metric_card(
     return f"""
     <div style="
         background: {PALETTE['card_bg']};
-        backdrop-filter: blur(16px);
-        -webkit-backdrop-filter: blur(16px);
         border: 1px solid rgba(255,255,255,0.08);
-        border-radius: 16px;
+        border-radius: 8px;
         padding: 1.4rem 1.6rem;
         text-align: center;
         transition: transform 0.25s ease, box-shadow 0.25s ease;
-        box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.15);
     ">
         <p style="margin:0 0 0.3rem 0;font-size:1.5rem;">{icon}</p>
         <p style="margin:0;font-size:0.82rem;color:#9ca3af;
@@ -75,9 +78,8 @@ def create_metric_card(
         </p>
         <p style="margin:0.35rem 0 0 0;font-size:1.85rem;
                   font-weight:700;
-                  background:{PALETTE['accent_gradient']};
-                  -webkit-background-clip:text;
-                  -webkit-text-fill-color:transparent;">
+                  font-family:'Playfair Display', Georgia, serif;
+                  color:{PALETTE['blue']};">
             {value}
         </p>
         {delta_html}
@@ -320,14 +322,15 @@ def create_residuals_plot(
 
 def section_header(title: str, subtitle: str = "") -> None:
     """Render a styled section header inside Streamlit."""
-    sub = f'<p style="color:#9ca3af;margin:0;">{subtitle}</p>' if subtitle else ""
+    sub = f'<p style="color:#9ca3af;margin:0;font-size:0.88rem;">{subtitle}</p>' if subtitle else ""
     st.markdown(
         f"""
-        <div style="margin:2rem 0 1rem 0;">
+        <div style="margin:2.5rem 0 1.2rem 0; border-left: 2px solid {PALETTE['blue']}; padding-left: 1rem;">
             <h3 style="margin:0;
-                        background:{PALETTE['accent_gradient']};
-                        -webkit-background-clip:text;
-                        -webkit-text-fill-color:transparent;">
+                        font-family:'Playfair Display', Georgia, serif;
+                        color:#ffffff;
+                        font-size:1.4rem;
+                        font-weight:600;">
                 {title}
             </h3>
             {sub}

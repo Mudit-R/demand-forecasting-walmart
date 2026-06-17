@@ -130,7 +130,7 @@ if date_range and len(date_range) == 2 and "date" in filt.columns:
 # ── title ───────────────────────────────────────────────────────────────────
 st.markdown(
     """
-    <h1 style="background:linear-gradient(135deg,#667eea,#764ba2);
+    <h1 style="background:linear-gradient(135deg,#bfa085,#8c6c53);
                -webkit-background-clip:text;-webkit-text-fill-color:transparent;
                font-weight:800;">
         Exploratory Data Analysis
@@ -169,7 +169,7 @@ section_header("3 · Sales by Category", "Proportion of total sales across produ
 if "cat_id" in filt.columns:
     cat_agg = filt.groupby("cat_id")["sales"].sum().reset_index()
     fig3 = px.treemap(cat_agg, path=["cat_id"], values="sales",
-                      color="sales", color_continuous_scale=["#667eea", "#764ba2", "#00D2FF"],
+                      color="sales", color_continuous_scale=["#4d3c32", "#8c6c53", "#bfa085"],
                       template=_THEME)
     fig3.update_layout(margin=dict(l=10, r=10, t=40, b=10))
     st.plotly_chart(fig3, use_container_width=True)
@@ -222,7 +222,7 @@ if len(numeric_cols) >= 2:
         z=corr.values,
         x=corr.columns.tolist(),
         y=corr.columns.tolist(),
-        colorscale=[[0, "#0e1117"], [0.5, "#667eea"], [1, "#00D2FF"]],
+        colorscale=[[0, "#222222"], [0.5, "#8c6c53"], [1, "#bfa085"]],
         zmin=-1, zmax=1,
         text=np.round(corr.values, 2),
         texttemplate="%{text}",
