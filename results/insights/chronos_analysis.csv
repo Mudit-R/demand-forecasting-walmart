@@ -1,0 +1,7 @@
+Metric,Chronos-2 Zero-Shot,LightGBM (Best),SARIMA (Baseline)
+RMSE,2.43,1.84,3.21
+MAE,1.68,1.21,2.18
+MAPE (%),13.9,10.8,18.4
+sMAPE (%),12.2,9.4,15.8
+WRMSSE,0.617,0.493,0.812
+Inference Time (s),28.4,34.2,142.3

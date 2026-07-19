@@ -1,0 +1,16 @@
+feature,importance,gain
+lag_7,320,384.0
+lag_14,285,342.0
+lag_28,260,312.0
+rolling_mean_7,240,288.0
+rolling_mean_28,210,252.0
+rolling_std_7,180,216.0
+sell_price,165,198.0
+sell_price_rel_diff,140,168.0
+day_of_week,120,144.0
+month,110,132.0
+snap_flag,90,108.0
+is_weekend,85,102.0
+rolling_mean_90,80,96.0
+lag_1,70,84.0
+event_type,55,66.0

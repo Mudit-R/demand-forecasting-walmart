@@ -195,12 +195,20 @@ class WalmartM5Loader:
         ]
         cmd = [c for c in cmd if c]  # drop empty strings
 
+        import os as _os
+        env = _os.environ.copy()
+        # Support both legacy key format and new KGAT bearer token
+        token = _os.environ.get("KAGGLE_API_TOKEN", "")
+        if token:
+            env["KAGGLE_API_TOKEN"] = token
+
         try:
             result = subprocess.run(
                 cmd,
                 capture_output=True,
                 text=True,
                 check=True,
+                env=env,
             )
             logger.info("Kaggle download output:\n%s", result.stdout)
         except FileNotFoundError as exc:

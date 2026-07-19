@@ -165,9 +165,11 @@ class WalmartM5Preprocessor:
             )
             df["sell_price"] = df["sell_price"].fillna(0.0)
 
-        # Event columns
+        # Event columns — convert to string first to avoid Categorical 'new category' error
         for col in ["event_name_1", "event_type_1", "event_name_2", "event_type_2"]:
             if col in df.columns:
+                if hasattr(df[col], "cat"):
+                    df[col] = df[col].astype(str)
                 df[col] = df[col].fillna("NoEvent")
 
         # Sales
