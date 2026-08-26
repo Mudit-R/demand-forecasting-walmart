@@ -488,14 +488,14 @@ def main():
     # Elasticity = % change in Q / % change in P
     elasticity_records = []
     for cat in ["FOODS", "HOUSEHOLD", "HOBBIES"]:
-        cat_sub = df_feat[df_feat["cat_id"] == cat].copy()
-        pct_p = cat_sub["price_rel_diff"].values
-        pct_q = (cat_sub["sales"] - cat_sub["rolling_mean_28"]) / (cat_sub["rolling_mean_28"] + 1e-5)
-        # Robust linear slope
-        valid = np.isfinite(pct_p) & np.isfinite(pct_q) & (np.abs(pct_p) > 0.01)
-        if np.sum(valid) > 50:
-            slope, _ = np.polyfit(pct_p[valid], pct_q[valid], 1)
-            elasticity_val = round(float(slope), 2)
+        cat_sub = df_feat[df_feat["cat_id"] == cat].dropna(subset=["sell_price", "sales"]).copy()
+        cat_sub = cat_sub[(cat_sub["sales"] > 0) & (cat_sub["sell_price"] > 0)]
+        if len(cat_sub) > 100:
+            log_p = np.log(cat_sub["sell_price"].values)
+            log_q = np.log(cat_sub["sales"].values)
+            slope, _ = np.polyfit(log_p, log_q, 1)
+            # Clip to valid economic bounds
+            elasticity_val = round(float(np.clip(slope, -2.5, -0.2)), 2)
         else:
             elasticity_val = -1.45 if cat == "FOODS" else (-0.85 if cat == "HOUSEHOLD" else -1.15)
 

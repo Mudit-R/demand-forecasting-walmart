@@ -43,7 +43,7 @@ def main():
     model_meta = {
         "Ensemble (Champion)": {
             "type": "Hybrid Blend (LightGBM + SARIMA Harmonic)",
-            "color": "#10b981",
+            "color": "#c1f53d",
             "latency": "3.2ms",
             "params": "1.2M",
             "strengths": "Combines non-linear tree elasticity with exact weekly harmonic differencing; lowest WRMSSE (0.517).",
@@ -59,7 +59,7 @@ def main():
         },
         "SARIMA": {
             "type": "Classical Statistical Baseline",
-            "color": "#64748b",
+            "color": "#00f2fe",
             "latency": "1.2ms",
             "params": "4 (p,d,q,s)",
             "strengths": "Strong weekly seasonal capture (s=7), mathematically rigorous confidence intervals, instant inference.",
@@ -69,25 +69,25 @@ def main():
             "type": "Additive Bayesian Decomposition",
             "color": "#3b82f6",
             "latency": "4.8ms",
-            "params": "N/A",
-            "strengths": "Human-interpretable trend changepoints, Fourier weekly/yearly seasonality, handles US federal holidays.",
-            "weaknesses": "Higher variance on short-term high-frequency sales dips; slight overestimation during holiday shifts."
+            "params": "25 (changepoints + fourier)",
+            "strengths": "Interpretable linear trend changepoints + holiday/event regressors.",
+            "weaknesses": "Higher training overhead, struggles with zero-inflated intermittent demand spikes."
         },
         "Chronos-2": {
             "type": "Foundation Model (Zero-Shot)",
             "color": "#f59e0b",
             "latency": "6.5ms",
-            "params": "710M",
-            "strengths": "Zero-shot generalization on raw sequence data without feature engineering or training steps.",
-            "weaknesses": "Higher computational memory requirements; slight accuracy lag behind gradient boosted domain models."
+            "params": "710M (Zero-Shot)",
+            "strengths": "Zero-shot transfer across unseen retail series without parameter gradient updates.",
+            "weaknesses": "Higher inference memory footprint compared to lightweight GBDT models."
         },
         "TFT": {
-            "type": "Deep Learning (Temporal Attention)",
+            "type": "Deep Learning (Temporal Fusion Transformer)",
             "color": "#a855f7",
             "latency": "11.2ms",
-            "params": "4.8M",
-            "strengths": "Multi-horizon sequence forecasting, interpretable temporal self-attention & variable selection.",
-            "weaknesses": "Requires GPU compute for optimal training; longer training iterations."
+            "params": "3.8M",
+            "strengths": "Multi-horizon self-attention, variable selection networks (VSN) isolate static store embeddings.",
+            "weaknesses": "Requires significant GPU memory & longer training epochs."
         }
     }
 

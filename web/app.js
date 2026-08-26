@@ -6,36 +6,36 @@
  */
 
 document.addEventListener("DOMContentLoaded", () => {
-  // Global Plotly Dark Theme Defaults
+  // Global Plotly Dark Theme Defaults (Xsolla Ultra-Tech Style)
   const PLOTLY_DARK_LAYOUT = {
     paper_bgcolor: "transparent",
     plot_bgcolor: "transparent",
     font: {
-      family: "Inter, -apple-system, sans-serif",
-      color: "#9ca3af",
+      family: "'Plus Jakarta Sans', -apple-system, sans-serif",
+      color: "#a1a1aa",
       size: 11
     },
     margin: { t: 30, r: 25, l: 45, b: 40 },
     xaxis: {
       gridcolor: "rgba(255, 255, 255, 0.06)",
-      zerolinecolor: "rgba(255, 255, 255, 0.1)",
-      tickfont: { color: "#9ca3af", size: 10 }
+      zerolinecolor: "rgba(255, 255, 255, 0.12)",
+      tickfont: { color: "#a1a1aa", size: 10 }
     },
     yaxis: {
       gridcolor: "rgba(255, 255, 255, 0.06)",
-      zerolinecolor: "rgba(255, 255, 255, 0.1)",
-      tickfont: { color: "#9ca3af", size: 10 }
+      zerolinecolor: "rgba(255, 255, 255, 0.12)",
+      tickfont: { color: "#a1a1aa", size: 10 }
     },
     legend: {
       orientation: "h",
       y: 1.12,
       x: 0,
-      font: { color: "#e5e7eb", size: 11 }
+      font: { color: "#ffffff", size: 11 }
     },
     hoverlabel: {
-      bgcolor: "#1a1a20",
-      bordercolor: "rgba(197, 164, 138, 0.4)",
-      font: { family: "Inter, sans-serif", color: "#ffffff", size: 12 }
+      bgcolor: "#141724",
+      bordercolor: "#c1f53d",
+      font: { family: "'Plus Jakarta Sans', sans-serif", color: "#ffffff", size: 12 }
     }
   };
 
@@ -196,7 +196,7 @@ document.addEventListener("DOMContentLoaded", () => {
       type: "bar",
       name: "Residual Error (Actual - Predicted)",
       marker: {
-        color: residuals.map(r => r >= 0 ? "#10b981" : "#ef4444")
+        color: residuals.map(r => r >= 0 ? "#c1f53d" : "#ff3366")
       }
     };
 
@@ -225,14 +225,14 @@ document.addEventListener("DOMContentLoaded", () => {
           y: M5_DATA.historicalSales,
           mode: "lines",
           name: "Weekly Aggregated Sales",
-          line: { color: "#c5a48a", width: 1.6 }
+          line: { color: "rgba(255, 255, 255, 0.75)", width: 1.6 }
         },
         {
           x: M5_DATA.historicalDates,
           y: M5_DATA.historicalTrend,
           mode: "lines",
           name: "Macro Growth Trend (2011–2016)",
-          line: { color: "#10b981", width: 2, dash: "dash" }
+          line: { color: "#c1f53d", width: 2.2, dash: "dash" }
         }
       ];
 
@@ -386,8 +386,8 @@ document.addEventListener("DOMContentLoaded", () => {
         type: "bar",
         orientation: "h",
         marker: {
-          color: "rgba(197, 164, 138, 0.85)",
-          line: { color: "#c5a48a", width: 1 }
+          color: "rgba(193, 245, 61, 0.85)",
+          line: { color: "#c1f53d", width: 1 }
         }
       };
 
