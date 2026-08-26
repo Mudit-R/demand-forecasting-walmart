@@ -1,4 +1,6 @@
 ds,delta,label
-2014-11-28,0.18,Black Friday spike
-2015-04-05,-0.12,Post-holiday dip
-2015-11-27,0.21,Thanksgiving surge
+2014-08-05,0.0,Trend shift 1
+2014-10-06,0.056,Trend shift 2
+2014-12-06,0.123,Trend shift 3
+2015-02-05,0.158,Trend shift 4
+2015-04-07,0.137,Trend shift 5

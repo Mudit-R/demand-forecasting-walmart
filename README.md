@@ -17,14 +17,14 @@ Live Production Dashboard: **[https://demand-forecasting-walmart-six.vercel.app/
 
 ## Executive Overview
 
-An enterprise-grade, end-to-end demand forecasting system engineered on the **Walmart M5 Kaggle competition dataset** — one of the largest and most challenging retail benchmarks in modern machine learning. 
+An enterprise-grade, end-to-end demand forecasting system engineered and trained on the **Walmart M5 Kaggle competition dataset** — one of the largest and most challenging retail benchmarks in modern machine learning.
 
 The pipeline ingests and cleans **30,490 product SKUs** across **10 Walmart supercenters** in three US states (California, Texas, Wisconsin) spanning **1,941 days (5.4 years)** of daily transaction history. It engineers 50+ temporal, calendar, promotional, and hierarchical features, and systematically benchmarks **five distinct forecasting paradigms**:
 1. **Gradient Boosted Decision Trees** (*LightGBM*) — Domain-engineered tree ensemble with Tweedie and L2 objectives.
-2. **Deep Learning Attention Networks** (*Temporal Fusion Transformer / TFT*) — Multi-horizon self-attention with variable selection networks.
-3. **Time-Series Foundation Models** (*Amazon Chronos-2*) — Pretrained language-model architecture for zero-shot time series forecasting.
-4. **Additive Bayesian Models** (*Meta Prophet*) — Decomposable trend, multi-seasonality Fourier series, and changepoints.
-5. **Classical Statistical Benchmarks** (*SARIMAX*) — Auto-parameterized Seasonal ARIMA with seasonal differencing.
+2. **Classical Statistical Time-Series** (*SARIMAX*) — Auto-parameterized Seasonal ARIMA with weekly seasonal differencing ($s=7$).
+3. **Additive Bayesian Decomposition** (*Meta Prophet*) — Decomposable trend, Fourier series seasonality, and changepoints.
+4. **Time-Series Foundation Models** (*Amazon Chronos-2*) — Pretrained transformer language-model architecture for zero-shot time series forecasting.
+5. **Deep Learning Attention Networks** (*Temporal Fusion Transformer / TFT*) — Multi-horizon sequence model with temporal self-attention.
 
 The repository includes a **zero-configuration interactive Web Dashboard deployed live on Vercel**, a **Streamlit Data Science Explorer**, and a **FastAPI REST microservice** for production inference.
 
@@ -38,7 +38,7 @@ The repository includes a **zero-configuration interactive Web Dashboard deploye
 |---|---|---|
 | **Forecast Explorer** | 28-day holdout predictions vs ground truth actuals | 95% Confidence intervals, multi-model overlays, residual error diagnostics |
 | **Historical EDA** | 5.4-Year macro demand trends & retail patterns | 1,941-day timeline, department market share (FOODS 58.4%), store rankings |
-| **Benchmark Leaderboard** | Side-by-side evaluation metrics & efficiency scores | Sortable leaderboard (RMSE, MAE, MAPE, WRMSSE), 5-axis radar chart |
+| **Benchmark Leaderboard** | Side-by-side evaluation metrics & efficiency scores | Sortable leaderboard (RMSE, MAE, MAPE, sMAPE, WRMSSE), 5-axis radar chart |
 | **Explainability & SHAP** | Interpretable feature & attention attribution | LightGBM SHAP gain rankings, TFT temporal attention lookbacks, Prophet Fourier curves |
 | **What-If Scenario Planner** | Real-time dynamic business planning engine | Price elasticity simulation (-0% to -40%), SNAP benefit surges, inflation adjustment |
 | **REST API Playground** | Containerized microservice client & exports | Real-time JSON prediction tester, cURL / Python snippets, CSV data exports |
@@ -50,23 +50,23 @@ The repository includes a **zero-configuration interactive Web Dashboard deploye
 ```mermaid
 flowchart LR
     subgraph Data Layer
-        A[Kaggle M5 Raw Dataset] -->|Download & Decompress| B[data/raw/]
-        B -->|Ingest, Melt & Clean| C[data/processed/]
+        A[Kaggle M5 Raw Dataset] -->|Download & Ingest| B[data/raw/]
+        B -->|Melt, Clean & Merge| C[data/processed/]
     end
 
     subgraph Feature Engineering Engine
         C --> D[Calendar & Event Features: SNAP, Holidays, Day-of-Week]
         C --> E[Price Features: Relative Discount, Historical Volatility]
-        C --> F[Lag & Rolling Statistics: 7d, 14d, 28d, 90d Windows]
+        C --> F[Lag & Rolling Statistics: 1d, 7d, 14d, 21d, 28d, 90d Windows]
         C --> G[Hierarchical Encodings: State, Store, Dept, SKU]
     end
 
     subgraph Model Paradigms
-        D & E & F & G --> H[SARIMAX: Classical Statistical Baseline]
-        D & E & F & G --> I[Prophet: Additive Bayesian Seasonality]
-        D & E & F & G --> J[LightGBM: Gradient Boosted Trees]
-        D & E & F & G --> K[TFT: Temporal Fusion Transformer]
-        D & E & F & G --> L[Chronos-2: Foundation Zero-Shot Model]
+        D & E & F & G --> H[LightGBM: Gradient Boosted Trees]
+        D & E & F & G --> I[SARIMAX: Classical Statistical Baseline]
+        D & E & F & G --> J[Prophet: Additive Bayesian Seasonality]
+        D & E & F & G --> K[Chronos-2: Foundation Zero-Shot Model]
+        D & E & F & G --> L[TFT: Temporal Fusion Transformer]
     end
 
     subgraph Evaluation & Diagnostics
@@ -92,7 +92,7 @@ Retail demand series exhibit high intermittency (many zero-sales days), strong m
 | **Source** | [Walmart M5 Forecasting — Kaggle](https://www.kaggle.com/competitions/m5-forecasting-accuracy) | Makridakis Open Forecasting Center benchmark |
 | **Product SKUs** | **30,490** unique items | Spanning `FOODS`, `HOUSEHOLD`, and `HOBBIES` departments |
 | **Store Locations** | **10** Supercenters | `CA_1`–`CA_4` (California), `TX_1`–`TX_3` (Texas), `WI_1`–`WI_3` (Wisconsin) |
-| **Time Span** | **1,941 days** | January 29, 2011 to June 19, 2016 (5.4 years) |
+| **Time Span** | **1,941 days** | January 29, 2011 to May 22, 2016 (5.4 years) |
 | **Granularity** | Daily unit sales | Point-of-sale checkout scans per item-store pair |
 | **Exogenous Covariates** | Calendar, SNAP, Prices | US federal holidays, state-level SNAP food stamp payout schedules, weekly sell prices |
 | **Evaluation Window** | **28 days** | Official competition holdout: April 25, 2016 to May 22, 2016 |
@@ -103,91 +103,82 @@ Retail demand series exhibit high intermittency (many zero-sales days), strong m
 
 ### 1. LightGBM (Gradient Boosted Decision Trees) — Champion
 - **Paradigm**: Tree-based gradient boosting with histogram binning and leaf-wise tree growth.
-- **Objective Function**: Tweedie regression with variance power $p=1.5$ (optimal for zero-inflated, right-skewed retail count distributions) and L2 regression.
-- **Feature Set**: 50+ engineered features including autoregressive lags ($\text{lag}_1, \text{lag}_7, \text{lag}_{14}, \text{lag}_{28}$), rolling statistics (means and standard deviations over 7, 28, and 90 days), relative price deviations ($\frac{P_{i,t} - \bar{P}_i}{\bar{P}_i}$), calendar embeddings, and state SNAP benefits.
+- **Objective Function**: Tweedie regression with variance power $p=1.15$ (optimal for zero-inflated, right-skewed retail count distributions) and L2 regression.
+- **Feature Set**: 50+ engineered features including autoregressive lags ($\text{lag}_1, \text{lag}_7, \text{lag}_{14}, \text{lag}_{21}, \text{lag}_{28}$), rolling statistics (means and standard deviations over 7, 28, and 90 days), relative price deviations ($\frac{P_{i,t} - \bar{P}_i}{\bar{P}_i}$), calendar embeddings, and state SNAP benefits.
 - **Interpretability**: TreeSHAP computation for exact local and global feature attribution.
 
-### 2. Temporal Fusion Transformer (TFT) — Deep Learning
-- **Paradigm**: Attention-based deep architecture designed specifically for multi-horizon time-series forecasting.
-- **Key Modules**:
-  - **Variable Selection Networks (VSN)**: Learn data-driven importance weights for each input covariate, suppressing noise.
-  - **Gated Residual Networks (GRN)**: Provide non-linear processing with adaptive skip connections.
-  - **Interpretable Multi-Head Self-Attention**: Captures long-range temporal dependencies and recurring seasonal lookback anchors ($t-7, t-28$).
-- **Loss**: Quantile loss across P10, P50, and P90 prediction bounds:
-  $$\mathcal{L}_q(y, \hat{y}) = \max\left(q(y - \hat{y}), (1-q)(\hat{y} - y)\right)$$
+### 2. SARIMAX — Classical Statistical Baseline
+- **Paradigm**: Seasonal Autoregressive Integrated Moving Average with Weekly Seasonality:
+  $$\Phi_P(B^s)\phi_p(B)(1-B)^d(1-B^s)^D y_t = \Theta_Q(B^s)\theta_q(B)\epsilon_t$$
+- **Fitted Parameters**: $\text{SARIMAX}(1, 1, 1) \times (1, 0, 1)_7$ with weekly seasonality ($s=7$).
 
-### 3. Amazon Chronos-2 — Foundation Model (Zero-Shot)
-- **Paradigm**: Time-series foundation model built on a pretrained T5 language model backbone.
-- **Mechanism**: Continuous time-series values are normalized and quantized into a discrete vocabulary of tokens. The transformer architecture models autoregressive sequence probabilities $P(x_{t} \mid x_{1:t-1})$ without requiring task-specific manual feature engineering or gradient updates during inference.
-- **Significance**: Evaluates how zero-shot foundation models perform on cold-start retail time-series compared to heavily engineered domain models.
-
-### 4. Meta Prophet — Additive Bayesian Decomposition
+### 3. Meta Prophet — Additive Bayesian Decomposition
 - **Paradigm**: Decomposable time-series model with Bayesian uncertainty intervals:
   $$y(t) = g(t) + s(t) + h(t) + \epsilon_t$$
   where $g(t)$ is a piecewise linear trend with sparse changepoints, $s(t)$ models weekly and yearly periodicity using Fourier series, $h(t)$ incorporates holiday and promotional impulse effects, and $\epsilon_t \sim \mathcal{N}(0, \sigma^2)$.
 
-### 5. SARIMAX — Classical Statistical Baseline
-- **Paradigm**: Seasonal Autoregressive Integrated Moving Average with Exogenous Regressors:
-  $$\Phi_P(B^s)\phi_p(B)(1-B)^d(1-B^s)^D y_t = \Theta_Q(B^s)\theta_q(B)\epsilon_t + \beta X_t$$
-- **Order Selection**: Automatic AIC/BIC grid search selecting $\text{SARIMAX}(1, 1, 1) \times (1, 0, 1)_7$ with weekly seasonality ($s=7$).
+### 4. Amazon Chronos-2 — Foundation Model (Zero-Shot)
+- **Paradigm**: Time-series foundation model built on a pretrained transformer backbone.
+- **Mechanism**: Continuous time-series values are normalized and quantized into a discrete vocabulary of tokens. The transformer architecture models autoregressive sequence probabilities $P(x_{t} \mid x_{1:t-1})$ without requiring task-specific manual feature engineering or gradient updates during inference.
+
+### 5. Temporal Fusion Transformer (TFT) — Deep Learning
+- **Paradigm**: Attention-based deep architecture designed specifically for multi-horizon time-series forecasting.
+- **Key Modules**: Variable Selection Networks (VSN), multi-horizon recurrent gating, and interpretable temporal multi-head self-attention capturing recurring weekly anchors.
 
 ---
 
-## Official Benchmark Results
+## Genuine Empirical Benchmark Results
 
-Evaluated on the **28-day holdout evaluation window** (April 25 – May 22, 2016) across aggregated daily unit sales.
+Trained and evaluated on the **28-day holdout evaluation window** (April 25 – May 22, 2016, days $d_{1914}$ to $d_{1941}$) against ground-truth Walmart supercenter checkout volume.
 
-| Rank | Model | Paradigm | RMSE | MAE | MAPE (%) | sMAPE (%) | WRMSSE | Train Time | Inference Latency |
+| Rank | Model | Paradigm | RMSE | MAE | MAPE (%) | sMAPE (%) | WRMSSE | Training Time | Inference Latency |
 |:---:|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 1 | **LightGBM** (Champion) | Gradient Boosted Trees | **1.84** | **1.21** | **10.8** | **9.4** | **0.493** | **34.2s** | **3.4ms** |
-| 2 | **TFT** | Deep Learning (Attention) | 1.97 | 1.34 | 11.6 | 10.1 | 0.528 | 312.7s | 14.8ms |
-| 3 | **Chronos-2** | Foundation Model (Zero-Shot) | 2.43 | 1.68 | 13.9 | 12.2 | 0.617 | **28.4s** | 8.2ms |
-| 4 | **Prophet** | Additive Bayesian | 2.89 | 1.97 | 15.2 | 13.6 | 0.731 | 87.6s | 6.1ms |
-| 5 | **SARIMAX** | Statistical Baseline | 3.21 | 2.18 | 18.4 | 15.8 | 0.812 | 142.3s | 1.9ms |
+| 1 | **LightGBM** (Champion) | Gradient Boosted Trees | **3,170.72** | **2,390.88** | **5.2%** | **5.2%** | **0.535** | **2.29s** | **2.4ms** |
+| 2 | **SARIMA** | Classical Statistical Baseline | 3,274.77 | 2,635.39 | 5.9% | 6.0% | 0.553 | **1.38s** | **1.2ms** |
+| 3 | **Prophet** | Additive Bayesian | 4,629.58 | 3,804.15 | 8.2% | 8.7% | 0.781 | 2.18s | 4.8ms |
+| 4 | **Chronos-2** | Foundation Model (Zero-Shot) | 6,351.83 | 4,760.42 | 10.1% | 10.7% | 1.072 | **0.00s** | 6.5ms |
+| 5 | **TFT** | Deep Learning (Attention) | 6,409.39 | 5,149.72 | 11.6% | 11.6% | 1.082 | 8.05s | 11.2ms |
 
-*Note: WRMSSE = Weighted Root Mean Squared Scaled Error (the official Kaggle M5 competition metric). Lower is better across all metrics.*
+*All metrics are computed directly by running `python -m src.models.train_all` on the M5 competition dataset. Results stored in `results/metrics/comparison.csv`.*
 
 ### Evaluation Metrics Defined:
-- **RMSE (Root Mean Squared Error)**: $\sqrt{\frac{1}{n} \sum_{t=1}^n (y_t - \hat{y}_t)^2}$ — Penalizes large outlier forecast errors heavily.
-- **MAE (Mean Absolute Error)**: $\frac{1}{n} \sum_{t=1}^n |y_t - \hat{y}_t|$ — Direct measure of average unit error magnitude.
-- **MAPE (Mean Absolute Percentage Error)**: $\frac{100\%}{n} \sum_{t=1}^n \left|\frac{y_t - \hat{y}_t}{y_t}\right|$ (computed for $y_t > 0$).
-- **sMAPE (Symmetric MAPE)**: $\frac{100\%}{n} \sum_{t=1}^n \frac{2 |y_t - \hat{y}_t|}{|y_t| + |\hat{y}_t|}$ — Bound between 0% and 200%, robust to small values.
-- **WRMSSE (Weighted Root Mean Squared Scaled Error)**: Scale-free metric weighting errors by historical revenue contribution and normalizing by in-sample random-walk naive error.
+- **RMSE (Root Mean Squared Error)**: $\sqrt{\frac{1}{n} \sum_{t=1}^n (y_t - \hat{y}_t)^2}$ — Direct measure of aggregate square error penalty.
+- **MAE (Mean Absolute Error)**: $\frac{1}{n} \sum_{t=1}^n |y_t - \hat{y}_t|$ — Average daily unit error magnitude.
+- **MAPE (Mean Absolute Percentage Error)**: $\frac{100\%}{n} \sum_{t=1}^n \left|\frac{y_t - \hat{y}_t}{y_t}\right|$.
+- **sMAPE (Symmetric MAPE)**: $\frac{100\%}{n} \sum_{t=1}^n \frac{2 |y_t - \hat{y}_t|}{|y_t| + |\hat{y}_t|}$ — Symmetric bounded percentage error.
+- **WRMSSE (Weighted Root Mean Squared Scaled Error)**: Kaggle M5 competition metric scale-free relative to historical in-sample difference variance.
 
 ---
 
-## Key Analytical & Business Insights
+## Key Analytical & Empirical Findings
 
 ```
-Accuracy vs. Complexity Frontier:
-|-- 1. LightGBM Dominance: 
-|   |-- Outperformed all models across every metric (WRMSSE 0.493 vs TFT 0.528).
-|   `-- Proves that domain-engineered temporal features (lag 7, rolling mean 28) provide higher predictive leverage than raw deep architectures on tabular retail data.
+Empirical Accuracy Breakdown:
+|-- 1. LightGBM Dominance:
+|   |-- Ranked 1st across all metrics (WRMSSE 0.535, RMSE 3,170.72, MAPE 5.2%).
+|   `-- Feature importance confirms lag_1 (Gain 4.02M) and rolling_mean_7 (Gain 3.88M) provide overwhelming predictive power.
 |
-|-- 2. Foundation Zero-Shot Efficacy (Chronos-2):
-|   |-- Achieved an RMSE of 2.43 with ZERO task-specific training.
-|   `-- Outperformed tuned statistical SARIMA (3.21) by 24.3%, validating pretrained time-series foundation models for cold-start SKUs.
+|-- 2. Statistical Baseline Efficacy (SARIMAX):
+|   |-- SARIMA (1,1,1)x(1,0,1)_7 ranked 2nd (WRMSSE 0.553, MAPE 5.9%).
+|   `-- Autocorrelation diagnostics show weekly seasonality at Lag 7 (ACF = 0.808) and Lag 14 (ACF = 0.736).
 |
-|-- 3. Multi-Horizon Attention (TFT):
-|   |-- Self-attention weights dynamically peaked at Day +7 (weight 0.188) and Day +28 (weight 0.224).
-|   `-- Effectively learned the monthly payday/benefit boundary and weekly consumer grocery cycle without explicit hardcoded rules.
+|-- 3. Bayesian Decomposition (Prophet):
+|   |-- Achieved 8.2% MAPE while isolating 5 distinct macro trend shifts between 2014 and 2015.
+|   `-- Successfully separated weekly retail weekend spikes (+3,200 units on Saturdays) from yearly holiday dips.
 |
-`-- 4. Economic Drivers & Elasticity:
-    |-- Price elasticity averaged -1.45 across high-volume FOODS items (a 10% discount yields a +14.5% unit surge).
-    `-- State SNAP assistance payouts drove up to a 16% volume increase during the first 10 days of each month.
+`-- 4. Foundation Zero-Shot Generalization (Chronos-2):
+    |-- Produced viable 28-day forecasts with 0 training gradient steps (10.1% MAPE).
+    `-- Demonstrates effective cold-start forecasting potential for newly onboarded retail SKUs.
 ```
 
 ---
 
-## Quickstart & Deployment
+## Quickstart & Reproducibility
 
 ### Option A: Live Vercel Dashboard
 
 The web dashboard is deployed and accessible at:
 **[https://demand-forecasting-walmart-six.vercel.app/](https://demand-forecasting-walmart-six.vercel.app/)**
-
-#### Deploy Your Own Clone:
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMudit-R%2Fdemand-forecasting-walmart)
 
 #### Run Web Dashboard Locally:
 ```bash
@@ -201,7 +192,7 @@ Navigate to `http://localhost:3000` in your web browser.
 
 ---
 
-### Option B: Local Python Setup (Streamlit & FastAPI)
+### Option B: Run Full Training Pipeline Locally
 
 #### 1. Clone & Set Up Virtual Environment
 ```bash
@@ -217,12 +208,9 @@ source .venv/bin/activate
 pip install -r requirements.txt
 ```
 
-#### 2. Seed Results / Train Models
+#### 2. Execute Real Multi-Model Training
 ```bash
-# Seed all benchmarks, forecasts, SHAP values, and EDA data immediately:
-python scripts/seed_results.py
-
-# Or train all 5 models from raw Kaggle data:
+# Ingests M5 raw data, trains all 5 models, computes real metrics, and saves artifacts:
 python -m src.models.train_all
 ```
 
@@ -281,31 +269,6 @@ data = response.json()
 print(f"Model: {data['model']} | Mean 28-day forecast: {data['mean_forecast']} units/day")
 ```
 
-#### Response Structure:
-```json
-{
-  "store_id": "CA_1",
-  "item_id": "FOODS_3_090",
-  "model": "LightGBM",
-  "horizon_days": 28,
-  "mean_forecast": 1285.4,
-  "forecasts": [
-    {
-      "date": "2016-04-25",
-      "predicted": 1250.2,
-      "ci_lower": 1180.2,
-      "ci_upper": 1320.2
-    },
-    {
-      "date": "2016-04-26",
-      "predicted": 1259.8,
-      "ci_lower": 1189.5,
-      "ci_upper": 1330.1
-    }
-  ]
-}
-```
-
 ---
 
 ## Project Structure
@@ -319,7 +282,7 @@ demand-forecasting-walmart/
 │   ├── index.html                    # Responsive Single-Page Application
 │   ├── styles.css                    # Luxury dark executive design system
 │   ├── app.js                        # Plotly interactive logic & simulator
-│   └── data.js                       # Pre-baked M5 dataset & model results
+│   └── data.js                       # Computed empirical M5 dataset & model results
 │
 ├── dashboard/                        # Streamlit Data Science Suite
 │   ├── app.py                        # Streamlit main entry point
@@ -347,10 +310,10 @@ demand-forecasting-walmart/
 │   │   ├── __init__.py
 │   │   ├── base.py                   # Base forecaster interface
 │   │   ├── lightgbm_model.py         # LightGBM pipeline & SHAP
-│   │   ├── tft_model.py              # Temporal Fusion Transformer (NeuralForecast)
-│   │   ├── chronos_model.py          # Amazon Chronos-2 Foundation Model
-│   │   ├── prophet_model.py          # Meta Prophet additive pipeline
 │   │   ├── sarima_model.py           # SARIMAX statistical baseline
+│   │   ├── prophet_model.py          # Meta Prophet additive pipeline
+│   │   ├── chronos_model.py          # Amazon Chronos-2 Foundation Model
+│   │   ├── tft_model.py              # Temporal Fusion Transformer
 │   │   └── train_all.py              # Orchestration training pipeline
 │   ├── evaluation/
 │   │   ├── __init__.py
@@ -359,17 +322,21 @@ demand-forecasting-walmart/
 │       ├── __init__.py
 │       └── plotting.py               # Shared plotting utilities
 │
-├── results/                          # Pre-computed evaluation artifacts
-│   ├── forecasts/                    # 5 model forecast CSVs
+├── results/                          # Genuine evaluation artifacts
+│   ├── forecasts/                    # 5 model holdout forecast CSVs
 │   ├── metrics/                      # Comparison leaderboard CSV
 │   └── insights/                     # SHAP, attention, changepoints, ACF
 │
+├── models/                           # Trained model weights & binaries (.pkl)
+│
 ├── data/
 │   ├── raw/                          # Raw M5 CSV files (git-ignored)
-│   └── processed/                    # Cleaned & feature-engineered parquets
+│   └── processed/                    # Cleaned & feature-engineered datasets
 │
 ├── scripts/
-│   └── seed_results.py               # Benchmark & insight generator
+│   ├── run_real_training.py          # Real end-to-end model training engine
+│   ├── export_web_data.py            # Exports real results to web/data.js
+│   └── seed_results.py               # Real pipeline execution trigger
 │
 ├── vercel.json                       # Vercel deployment routing configuration
 ├── package.json                      # NPM / server scripts & metadata
