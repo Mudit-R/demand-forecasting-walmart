@@ -1,6 +1,6 @@
 """
-📈 Model Comparison Leaderboard
-=================================
+Model Comparison Leaderboard
+============================
 Side‑by‑side comparison of every model with auto‑highlighted winners,
 a radar chart, and a training‑time bar chart.
 """

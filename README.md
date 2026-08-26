@@ -1,5 +1,6 @@
 # Walmart M5 Demand Forecasting — Multi-Model Enterprise Analytics System
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-Vercel%20Dashboard-000000?logo=vercel&logoColor=white)](https://demand-forecasting-walmart-six.vercel.app/)
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMudit-R%2Fdemand-forecasting-walmart)
 [![Python 3.10+](https://img.shields.io/badge/Python-3.10%2B-3776AB?logo=python&logoColor=white)](https://www.python.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
@@ -10,6 +11,8 @@
 [![Chronos](https://img.shields.io/badge/Chronos--2-Amazon-FF9900)](https://github.com/amazon-science/chronos-forecasting)
 [![Prophet](https://img.shields.io/badge/Prophet-Meta-0467DF)](https://facebook.github.io/prophet/)
 
+Live Production Dashboard: **[https://demand-forecasting-walmart-six.vercel.app/](https://demand-forecasting-walmart-six.vercel.app/)**
+
 ---
 
 ## Executive Overview
@@ -17,13 +20,13 @@
 An enterprise-grade, end-to-end demand forecasting system engineered on the **Walmart M5 Kaggle competition dataset** — one of the largest and most challenging retail benchmarks in modern machine learning. 
 
 The pipeline ingests and cleans **30,490 product SKUs** across **10 Walmart supercenters** in three US states (California, Texas, Wisconsin) spanning **1,941 days (5.4 years)** of daily transaction history. It engineers 50+ temporal, calendar, promotional, and hierarchical features, and systematically benchmarks **five distinct forecasting paradigms**:
-1. **Gradient Boosted Decision Trees** (*LightGBM*) — Domain-engineered tree ensemble with Tweedie/L2 objectives.
+1. **Gradient Boosted Decision Trees** (*LightGBM*) — Domain-engineered tree ensemble with Tweedie and L2 objectives.
 2. **Deep Learning Attention Networks** (*Temporal Fusion Transformer / TFT*) — Multi-horizon self-attention with variable selection networks.
 3. **Time-Series Foundation Models** (*Amazon Chronos-2*) — Pretrained language-model architecture for zero-shot time series forecasting.
 4. **Additive Bayesian Models** (*Meta Prophet*) — Decomposable trend, multi-seasonality Fourier series, and changepoints.
 5. **Classical Statistical Benchmarks** (*SARIMAX*) — Auto-parameterized Seasonal ARIMA with seasonal differencing.
 
-The repository includes a **zero-configuration interactive Web Dashboard deployable to Vercel in 1 click**, a **Streamlit Data Science Explorer**, and a **FastAPI REST microservice** for production inference.
+The repository includes a **zero-configuration interactive Web Dashboard deployed live on Vercel**, a **Streamlit Data Science Explorer**, and a **FastAPI REST microservice** for production inference.
 
 ---
 
@@ -33,12 +36,12 @@ The repository includes a **zero-configuration interactive Web Dashboard deploya
 
 | Dashboard View | Description | Key Capabilities |
 |---|---|---|
-| **🔮 Forecast Explorer** | 28-day holdout predictions vs ground truth actuals | 95% Confidence intervals, multi-model overlays, residual error diagnostics |
-| **📊 Historical EDA** | 5.4-Year macro demand trends & retail patterns | 1,941-day timeline, department market share (FOODS 58.4%), store rankings |
-| **🏆 Benchmark Leaderboard** | Side-by-side evaluation metrics & efficiency scores | Sortable leaderboard (RMSE, MAE, MAPE, WRMSSE), 5-axis radar chart |
-| **🧠 Explainability & SHAP** | Interpretable feature & attention attribution | LightGBM SHAP gain rankings, TFT temporal attention lookbacks, Prophet Fourier curves |
-| **⚡ What-If Scenario Planner** | Real-time dynamic business planning engine | Price elasticity simulation (-0% to -40%), SNAP benefit surges, inflation adjustment |
-| **🔌 REST API Playground** | Containerized microservice client & exports | Real-time JSON prediction tester, cURL / Python snippets, CSV data exports |
+| **Forecast Explorer** | 28-day holdout predictions vs ground truth actuals | 95% Confidence intervals, multi-model overlays, residual error diagnostics |
+| **Historical EDA** | 5.4-Year macro demand trends & retail patterns | 1,941-day timeline, department market share (FOODS 58.4%), store rankings |
+| **Benchmark Leaderboard** | Side-by-side evaluation metrics & efficiency scores | Sortable leaderboard (RMSE, MAE, MAPE, WRMSSE), 5-axis radar chart |
+| **Explainability & SHAP** | Interpretable feature & attention attribution | LightGBM SHAP gain rankings, TFT temporal attention lookbacks, Prophet Fourier curves |
+| **What-If Scenario Planner** | Real-time dynamic business planning engine | Price elasticity simulation (-0% to -40%), SNAP benefit surges, inflation adjustment |
+| **REST API Playground** | Containerized microservice client & exports | Real-time JSON prediction tester, cURL / Python snippets, CSV data exports |
 
 ---
 
@@ -59,22 +62,22 @@ flowchart LR
     end
 
     subgraph Model Paradigms
-        D & E & F & G --> H[SARIMAX (Classical Statistical Baseline)]
-        D & E & F & G --> I[Prophet (Additive Bayesian Seasonality)]
-        D & E & F & G --> J[LightGBM (Gradient Boosted Trees)]
-        D & E & F & G --> K[TFT (Temporal Fusion Transformer)]
-        D & E & F & G --> L[Chronos-2 (Foundation Zero-Shot Model)]
+        D & E & F & G --> H[SARIMAX: Classical Statistical Baseline]
+        D & E & F & G --> I[Prophet: Additive Bayesian Seasonality]
+        D & E & F & G --> J[LightGBM: Gradient Boosted Trees]
+        D & E & F & G --> K[TFT: Temporal Fusion Transformer]
+        D & E & F & G --> L[Chronos-2: Foundation Zero-Shot Model]
     end
 
     subgraph Evaluation & Diagnostics
-        H & I & J & K & L --> M[Evaluation Engine: RMSE · MAE · MAPE · sMAPE · WRMSSE]
-        M --> N[results/metrics/ · results/forecasts/ · results/insights/]
+        H & I & J & K & L --> M[Evaluation Engine: RMSE, MAE, MAPE, sMAPE, WRMSSE]
+        M --> N[results/metrics/, results/forecasts/, results/insights/]
     end
 
     subgraph Serving & UI Layer
-        N --> O[Vercel Web Dashboard (HTML5 / Modern CSS / Plotly.js)]
-        N --> P[Streamlit Data Science App (dashboard/app.py)]
-        N --> Q[FastAPI REST Microservice (src/api/app.py)]
+        N --> O[Vercel Live Dashboard: HTML5, Modern CSS, Plotly.js]
+        N --> P[Streamlit Data Science App: dashboard/app.py]
+        N --> Q[FastAPI REST Microservice: src/api/app.py]
     end
 ```
 
@@ -136,9 +139,9 @@ Evaluated on the **28-day holdout evaluation window** (April 25 – May 22, 2016
 
 | Rank | Model | Paradigm | RMSE | MAE | MAPE (%) | sMAPE (%) | WRMSSE | Train Time | Inference Latency |
 |:---:|---|---|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| 🥇 | **LightGBM** | Gradient Boosted Trees | **1.84** | **1.21** | **10.8** | **9.4** | **0.493** | **34.2s** | **3.4ms** |
-| 🥈 | **TFT** | Deep Learning (Attention) | 1.97 | 1.34 | 11.6 | 10.1 | 0.528 | 312.7s | 14.8ms |
-| 🥉 | **Chronos-2** | Foundation Model (Zero-Shot) | 2.43 | 1.68 | 13.9 | 12.2 | 0.617 | **28.4s** | 8.2ms |
+| 1 | **LightGBM** (Champion) | Gradient Boosted Trees | **1.84** | **1.21** | **10.8** | **9.4** | **0.493** | **34.2s** | **3.4ms** |
+| 2 | **TFT** | Deep Learning (Attention) | 1.97 | 1.34 | 11.6 | 10.1 | 0.528 | 312.7s | 14.8ms |
+| 3 | **Chronos-2** | Foundation Model (Zero-Shot) | 2.43 | 1.68 | 13.9 | 12.2 | 0.617 | **28.4s** | 8.2ms |
 | 4 | **Prophet** | Additive Bayesian | 2.89 | 1.97 | 15.2 | 13.6 | 0.731 | 87.6s | 6.1ms |
 | 5 | **SARIMAX** | Statistical Baseline | 3.21 | 2.18 | 18.4 | 15.8 | 0.812 | 142.3s | 1.9ms |
 
@@ -157,31 +160,33 @@ Evaluated on the **28-day holdout evaluation window** (April 25 – May 22, 2016
 
 ```
 Accuracy vs. Complexity Frontier:
-├── 1. LightGBM Dominance: 
-│   ├── Outperformed all models across every metric (WRMSSE 0.493 vs TFT 0.528).
-│   └── Proves that domain-engineered temporal features (lag 7, rolling mean 28) provide higher predictive leverage than raw deep architectures on tabular retail data.
-│
-├── 2. Foundation Zero-Shot Efficacy (Chronos-2):
-│   ├── Achieved an RMSE of 2.43 with ZERO task-specific training.
-│   └── Outperformed tuned statistical SARIMA (3.21) by 24.3%, validating pretrained time-series foundation models for cold-start SKUs.
-│
-├── 3. Multi-Horizon Attention (TFT):
-│   ├── Self-attention weights dynamically peaked at Day +7 (weight 0.188) and Day +28 (weight 0.224).
-│   └── Effectively learned the monthly payday/benefit boundary and weekly consumer grocery cycle without explicit hardcoded rules.
-│
-└── 4. Economic Drivers & Elasticity:
-    ├── Price elasticity averaged -1.45 across high-volume FOODS items (a 10% discount yields a +14.5% unit surge).
-    └── State SNAP assistance payouts drove up to a 16% volume increase during the first 10 days of each month.
+|-- 1. LightGBM Dominance: 
+|   |-- Outperformed all models across every metric (WRMSSE 0.493 vs TFT 0.528).
+|   `-- Proves that domain-engineered temporal features (lag 7, rolling mean 28) provide higher predictive leverage than raw deep architectures on tabular retail data.
+|
+|-- 2. Foundation Zero-Shot Efficacy (Chronos-2):
+|   |-- Achieved an RMSE of 2.43 with ZERO task-specific training.
+|   `-- Outperformed tuned statistical SARIMA (3.21) by 24.3%, validating pretrained time-series foundation models for cold-start SKUs.
+|
+|-- 3. Multi-Horizon Attention (TFT):
+|   |-- Self-attention weights dynamically peaked at Day +7 (weight 0.188) and Day +28 (weight 0.224).
+|   `-- Effectively learned the monthly payday/benefit boundary and weekly consumer grocery cycle without explicit hardcoded rules.
+|
+`-- 4. Economic Drivers & Elasticity:
+    |-- Price elasticity averaged -1.45 across high-volume FOODS items (a 10% discount yields a +14.5% unit surge).
+    `-- State SNAP assistance payouts drove up to a 16% volume increase during the first 10 days of each month.
 ```
 
 ---
 
 ## Quickstart & Deployment
 
-### Option A: Deploy to Vercel (1-Click Instant Web Dashboard)
+### Option A: Live Vercel Dashboard
 
-Deploy the zero-dependency interactive dashboard directly to Vercel:
+The web dashboard is deployed and accessible at:
+**[https://demand-forecasting-walmart-six.vercel.app/](https://demand-forecasting-walmart-six.vercel.app/)**
 
+#### Deploy Your Own Clone:
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FMudit-R%2Fdemand-forecasting-walmart)
 
 #### Run Web Dashboard Locally:
@@ -314,8 +319,7 @@ demand-forecasting-walmart/
 │   ├── index.html                    # Responsive Single-Page Application
 │   ├── styles.css                    # Luxury dark executive design system
 │   ├── app.js                        # Plotly interactive logic & simulator
-│   ├── data.js                       # Pre-baked M5 dataset & model results
-│   └── vercel.json                   # Web folder deployment configuration
+│   └── data.js                       # Pre-baked M5 dataset & model results
 │
 ├── dashboard/                        # Streamlit Data Science Suite
 │   ├── app.py                        # Streamlit main entry point
@@ -367,8 +371,8 @@ demand-forecasting-walmart/
 ├── scripts/
 │   └── seed_results.py               # Benchmark & insight generator
 │
-├── vercel.json                       # Root Vercel routing configuration
-├── package.json                      # NPM / server scripts
+├── vercel.json                       # Vercel deployment routing configuration
+├── package.json                      # NPM / server scripts & metadata
 ├── requirements.txt                  # Python dependencies
 └── setup.py                          # Package setup configuration
 ```
@@ -401,9 +405,3 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 **Mudit R**
 - GitHub: [@Mudit-R](https://github.com/Mudit-R)
-
----
-
-<p align="center">
-  <i>Built with curiosity & precision — if you find this project useful, consider starring the repository ⭐</i>
-</p>

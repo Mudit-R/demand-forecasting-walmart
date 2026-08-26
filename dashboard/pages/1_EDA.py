@@ -1,6 +1,6 @@
 """
-📊 Exploratory Data Analysis
-==============================
+Exploratory Data Analysis
+=========================
 Interactive exploration of the M5 sales data with filters for store,
 category, and date range.  All charts use the project's dark Plotly theme.
 """
@@ -177,7 +177,7 @@ if "cat_id" in filt.columns:
 # ─── Section 4: Seasonality Decomposition ───────────────────────────────────
 section_header("4 · Seasonality Decomposition", "Trend, seasonal, and residual components")
 
-with st.expander("ℹ️ How does decomposition work?"):
+with st.expander("How does decomposition work?"):
     st.markdown(
         "We use **statsmodels** `seasonal_decompose` with a multiplicative model "
         "(period = 7 for weekly seasonality).  The decomposition separates the "

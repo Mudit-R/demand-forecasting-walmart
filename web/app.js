@@ -1,7 +1,7 @@
 /**
  * Walmart M5 Demand Forecasting — Application Logic & Visualizations
  * ==================================================================
- * Initializes all interactive Plotly & Chart.js visualizations, manages tabs,
+ * Initializes interactive Plotly visualizations, manages tabs,
  * filters, real-time What-If scenario simulations, and exports.
  */
 
@@ -61,9 +61,9 @@ document.addEventListener("DOMContentLoaded", () => {
     simInflation: 0
   };
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // Tab Navigation
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function initTabs() {
     const tabButtons = document.querySelectorAll(".tab-btn");
     tabButtons.forEach(btn => {
@@ -99,9 +99,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }, 50);
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 1. Forecast Explorer
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderForecastExplorer() {
     const container = document.getElementById("forecast-chart");
     if (!container) return;
@@ -211,9 +211,9 @@ document.addEventListener("DOMContentLoaded", () => {
     Plotly.newPlot(container, [trace], layout, PLOTLY_CONFIG);
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 2. Exploratory Data Analysis (EDA)
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderEdaCharts() {
     // 5-Year Historical Time Series
     const histContainer = document.getElementById("eda-history-chart");
@@ -296,9 +296,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 3. Model Benchmark Leaderboard
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderLeaderboard() {
     const tableBody = document.getElementById("leaderboard-tbody");
     if (tableBody) {
@@ -332,7 +332,6 @@ document.addEventListener("DOMContentLoaded", () => {
       const categories = ["Accuracy (1/RMSE)", "Precision (1/MAE)", "Percentage (1/MAPE)", "Competition (1/WRMSSE)", "Train Speed"];
       
       const traces = M5_DATA.modelMetrics.map(m => {
-        // Normalize metrics to 0-100 scale where higher is better
         const normRmse = Math.max(10, 100 - (m.rmse - 1.84) * 50);
         const normMae = Math.max(10, 100 - (m.mae - 1.21) * 60);
         const normMape = Math.max(10, 100 - (m.mape - 10.8) * 8);
@@ -373,9 +372,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 4. Model Insights & Interpretability
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderInsights() {
     // Feature Importance Chart
     const fiContainer = document.getElementById("insights-fi-chart");
@@ -473,26 +472,21 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 5. Interactive What-If Scenario Simulator
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderSimulator() {
     const baseForecast = M5_DATA.modelForecasts[state.selectedModel] || M5_DATA.modelForecasts.LightGBM;
-    const avgPrice = 3.65; // Walmart M5 typical basket unit price ($)
+    const avgPrice = 3.65;
 
-    // Calculate elasticity and scenario adjustments
-    // Discount: Price elasticity ~ -1.45 (10% discount -> +14.5% unit sales)
     const discountMultiplier = 1.0 + (Math.abs(state.simDiscount) / 100.0) * 1.45;
-    // SNAP effect: boosts sales on days 1-10 of month
     const snapMultiplier = state.simSnap;
-    // Weekend boost: adds to Saturday/Sunday (indices 5, 6, 12, 13, etc.)
     const weekendMultiplier = 1.0 + (state.simWeekend / 100.0);
-    // Inflation drag: -0.6 elasticity
     const inflationMultiplier = 1.0 - (state.simInflation / 100.0) * 0.6;
 
     const simulatedSales = baseForecast.predicted.map((baseVal, idx) => {
       const date = new Date(M5_DATA.testDates[idx]);
-      const dayOfWeek = date.getDay(); // 0 is Sunday, 6 is Saturday
+      const dayOfWeek = date.getDay();
       const dayOfMonth = date.getDate();
 
       let val = baseVal * discountMultiplier * inflationMultiplier;
@@ -502,7 +496,6 @@ document.addEventListener("DOMContentLoaded", () => {
       return Math.round(val * 10) / 10;
     });
 
-    // Summary calculations
     const baseTotalUnits = baseForecast.predicted.reduce((a, b) => a + b, 0);
     const simTotalUnits = simulatedSales.reduce((a, b) => a + b, 0);
     const unitChangePct = ((simTotalUnits - baseTotalUnits) / baseTotalUnits) * 100.0;
@@ -512,7 +505,6 @@ document.addEventListener("DOMContentLoaded", () => {
     const simRevenue = simTotalUnits * simPrice;
     const revChangePct = ((simRevenue - baseRevenue) / baseRevenue) * 100.0;
 
-    // Update UI Impact Box
     const impactValEl = document.getElementById("sim-revenue-impact");
     const impactUnitsEl = document.getElementById("sim-units-impact");
     if (impactValEl) {
@@ -525,7 +517,6 @@ document.addEventListener("DOMContentLoaded", () => {
       impactUnitsEl.textContent = `${prefix}${unitChangePct.toFixed(1)}% (${Math.round(simTotalUnits).toLocaleString()} Units)`;
     }
 
-    // Render Scenario Chart
     const simContainer = document.getElementById("simulator-chart");
     if (simContainer) {
       const traces = [
@@ -559,9 +550,9 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // 6. REST API Playground & Export
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function renderApiPlayground() {
     const apiPayloadEl = document.getElementById("api-json-output");
     if (apiPayloadEl) {
@@ -589,11 +580,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   // UI Controls & Event Listeners
-  // ══════════════════════════════════════════════════════════════════════════
+  // --------------------------------------------------------------------------
   function initControls() {
-    // Model Selector
     const modelSelect = document.getElementById("model-select");
     if (modelSelect) {
       modelSelect.addEventListener("change", (e) => {
@@ -604,7 +594,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // CI Toggle
     const ciToggle = document.getElementById("ci-toggle");
     if (ciToggle) {
       ciToggle.addEventListener("click", () => {
@@ -614,7 +603,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // All Models Overlay Toggle
     const overlayToggle = document.getElementById("overlay-toggle");
     if (overlayToggle) {
       overlayToggle.addEventListener("click", () => {
@@ -624,7 +612,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Simulator Sliders
     const discountSlider = document.getElementById("sim-discount");
     const snapSlider = document.getElementById("sim-snap");
     const weekendSlider = document.getElementById("sim-weekend");
@@ -659,7 +646,6 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     }
 
-    // Export CSV Button
     const exportCsvBtn = document.getElementById("btn-export-csv");
     if (exportCsvBtn) {
       exportCsvBtn.addEventListener("click", () => {
@@ -679,7 +665,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Initialize Everything
+  // Initialize Application
   initTabs();
   initControls();
   renderForecastExplorer();

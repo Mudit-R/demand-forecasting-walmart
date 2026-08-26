@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "Walmart M5 Demand Forecasting — Multi-Model Forecasting System and Interactive Executive Dashboard",
   "main": "web/index.html",
+  "homepage": "https://demand-forecasting-walmart-six.vercel.app/",
   "scripts": {
     "dev": "python -m http.server 3000 --directory web",
     "start": "python -m http.server 3000 --directory web",

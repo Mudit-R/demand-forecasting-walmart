@@ -1,6 +1,6 @@
 """
-🧠 Model Insights & Interpretability
-======================================
+Model Insights & Interpretability
+=================================
 Per‑model interpretability visualisations: feature importance, SHAP
 values, attention weights, seasonality decomposition, ACF/PACF, and
 zero‑shot analysis.
@@ -359,7 +359,7 @@ with tab_chronos:
                     unsafe_allow_html=True)
         c2.markdown(create_metric_card("Inference Time", "15 s", delta="6× faster than TFT", icon=""),
                     unsafe_allow_html=True)
-        c3.markdown(create_metric_card("No Training Data", "✓", icon=""),
+        c3.markdown(create_metric_card("No Training Data", "Yes", icon=""),
                     unsafe_allow_html=True)
 
         st.markdown("<br>", unsafe_allow_html=True)

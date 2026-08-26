@@ -1,6 +1,6 @@
 """
-🔮 Demand Forecasts
-====================
+Demand Forecasts
+================
 Visualise model predictions vs actuals, residuals, and per‑model
 summary metrics.  Falls back to demo data when trained artefacts
 don't exist yet.
@@ -141,7 +141,7 @@ with tab_res:
                                   title=f"{selected_model} — Residuals")
     st.plotly_chart(fig_r, use_container_width=True)
 
-    with st.expander("ℹ️ Interpreting residuals"):
+    with st.expander("Interpreting residuals"):
         st.markdown(
             "Residuals represent **Actual − Predicted**.  Ideally they should "
             "be centred around zero with no visible pattern.  Systematic bias "

@@ -3,17 +3,18 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Walmart M5 Demand Forecasting — Multi-Model Enterprise Analytics Dashboard</title>
-  <meta name="description" content="Production-grade demand forecasting system on Walmart M5 dataset comparing LightGBM, TFT, Chronos-2, Prophet, and SARIMA.">
+  <title>Walmart M5 Demand Forecasting — Enterprise Multi-Model System</title>
+  <meta name="description" content="Production demand forecasting system on the Walmart M5 dataset benchmarking LightGBM, TFT, Chronos-2, Prophet, and SARIMAX.">
   <meta name="theme-color" content="#0b0b0e">
 
   <!-- OpenGraph / Social Media -->
   <meta property="og:title" content="Walmart M5 Demand Forecasting System">
-  <meta property="og:description" content="Multi-Model retail demand forecasting benchmark across 30,490 items with real-time What-If scenario planning.">
+  <meta property="og:description" content="Enterprise demand forecasting benchmark across 30,490 items with real-time scenario simulation.">
   <meta property="og:type" content="website">
+  <meta property="og:url" content="https://demand-forecasting-walmart-six.vercel.app/">
 
-  <!-- Favicon -->
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220%22 width=%2232%22 height=%2232%22><text y=%2224%22 font-size=%2224%22>📈</text></svg>">
+  <!-- Minimalist Vector Favicon -->
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='%23c5a48a' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'><polyline points='22 7 13.5 15.5 8.5 10.5 2 17'/><polyline points='16 7 22 7 22 13'/></svg>">
 
   <!-- Stylesheet -->
   <link rel="stylesheet" href="styles.css">
@@ -27,20 +28,20 @@
   <header class="top-nav">
     <div class="brand">
       <div class="brand-icon">
-        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
           <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline>
           <polyline points="16 7 22 7 22 13"></polyline>
         </svg>
       </div>
       <div class="brand-info">
-        <h1>Walmart M5 Forecasting <span class="badge-tag">Production Ready</span></h1>
-        <p>30,490 SKUs · 10 Stores (CA, TX, WI) · 5 Model Paradigms</p>
+        <h1>Walmart M5 Forecasting <span class="badge-tag">Production</span></h1>
+        <p>30,490 SKUs · 10 Supercenters (CA, TX, WI) · 5 Paradigms</p>
       </div>
     </div>
 
     <div class="nav-actions">
-      <button id="btn-export-csv" class="btn-secondary" title="Download Forecast CSV">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+      <button id="btn-export-csv" class="btn-secondary" title="Export 28-day predictions to CSV">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
           <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
           <polyline points="7 10 12 15 17 10"></polyline>
           <line x1="12" y1="15" x2="12" y2="3"></line>
@@ -48,10 +49,10 @@
         Export CSV
       </button>
       <a href="https://github.com/Mudit-R/demand-forecasting-walmart" target="_blank" rel="noopener noreferrer" class="btn-primary">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor">
           <path d="M12 0C5.37 0 0 5.37 0 12c0 5.31 3.435 9.795 8.205 11.385.6.105.825-.255.825-.57 0-.285-.015-1.23-.015-2.235-3.015.555-3.795-.735-4.035-1.41-.135-.345-.72-1.41-1.23-1.695-.42-.225-1.02-.78-.015-.795.945-.015 1.62.87 1.845 1.23 1.08 1.815 2.805 1.305 3.495.99.105-.78.42-1.305.765-1.605-2.67-.3-5.46-1.335-5.46-5.925 0-1.305.465-2.385 1.23-3.225-.12-.3-.54-1.53.12-3.18 0 0 1.005-.315 3.3 1.23.96-.27 1.98-.405 3-.405s2.04.135 3 .405c2.295-1.56 3.3-1.23 3.3-1.23.66 1.65.24 2.88.12 3.18.765.84 1.23 1.905 1.23 3.225 0 4.605-2.805 5.625-5.475 5.925.435.375.81 1.095.81 2.22 0 1.605-.015 2.895-.015 3.3 0 .315.225.69.825.57A12.02 12.02 0 0 0 24 12c0-6.63-5.37-12-12-12z"/>
         </svg>
-        GitHub Repository
+        GitHub
       </a>
     </div>
   </header>
@@ -63,10 +64,10 @@
     <section class="hero-header">
       <h2 class="hero-title">Walmart M5 Multi-Model Demand Forecasting</h2>
       <p class="hero-subtitle">
-        An enterprise forecasting engine evaluating <strong>Gradient Boosted Trees (LightGBM)</strong>, 
-        <strong>Deep Learning Attention (TFT)</strong>, <strong>Foundation Zero-Shot (Chronos-2)</strong>, 
-        <strong>Additive Bayesian (Prophet)</strong>, and <strong>Classical Statistics (SARIMA)</strong> 
-        over 1,941 days of retail transaction history.
+        Enterprise retail forecasting framework benchmarking <strong>Gradient Boosted Trees (LightGBM)</strong>, 
+        <strong>Deep Learning Attention (TFT)</strong>, <strong>Foundation Zero-Shot Models (Chronos-2)</strong>, 
+        <strong>Additive Bayesian Decomposition (Prophet)</strong>, and <strong>Classical Statistics (SARIMAX)</strong> 
+        across 1,941 days of transaction history.
       </p>
     </section>
 
@@ -75,7 +76,9 @@
       <div class="kpi-card highlight">
         <div class="kpi-header">
           <span class="kpi-label">Champion Model</span>
-          <span class="kpi-icon">🏆</span>
+          <span class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 14.66V17c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 9V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v5"></path></svg>
+          </span>
         </div>
         <div class="kpi-value" style="color: var(--accent-green);">LightGBM</div>
         <div class="kpi-subtext">
@@ -86,7 +89,9 @@
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">28-Day Test Volume</span>
-          <span class="kpi-icon">📦</span>
+          <span class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+          </span>
         </div>
         <div class="kpi-value">36.1K</div>
         <div class="kpi-subtext">
@@ -97,7 +102,9 @@
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">Avg Daily Revenue</span>
-          <span class="kpi-icon">💵</span>
+          <span class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+          </span>
         </div>
         <div class="kpi-value">$74.2K</div>
         <div class="kpi-subtext">
@@ -107,8 +114,10 @@
 
       <div class="kpi-card">
         <div class="kpi-header">
-          <span class="kpi-label">Total Historical Days</span>
-          <span class="kpi-icon">📅</span>
+          <span class="kpi-label">Historical Span</span>
+          <span class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--text-muted)" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+          </span>
         </div>
         <div class="kpi-value">1,941</div>
         <div class="kpi-subtext">
@@ -119,11 +128,13 @@
       <div class="kpi-card">
         <div class="kpi-header">
           <span class="kpi-label">Zero-Shot Benchmark</span>
-          <span class="kpi-icon">⚡</span>
+          <span class="kpi-icon">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-amber)" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+          </span>
         </div>
         <div class="kpi-value" style="color: var(--accent-amber);">Chronos-2</div>
         <div class="kpi-subtext">
-          <span>RMSE 2.43 (No Training)</span>
+          <span>RMSE 2.43 (Zero Training)</span>
         </div>
       </div>
     </section>
@@ -131,27 +142,27 @@
     <!-- Tab Navigation -->
     <nav class="tabs-nav" aria-label="Dashboard views">
       <button class="tab-btn active" data-tab="forecast">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
         Forecast Explorer
       </button>
       <button class="tab-btn" data-tab="eda">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="18" y1="20" x2="18" y2="10"></line><line x1="12" y1="20" x2="12" y2="4"></line><line x1="6" y1="20" x2="6" y2="14"></line></svg>
         Historical EDA
       </button>
       <button class="tab-btn" data-tab="leaderboard">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 14.66V17c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 9V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v5"></path></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.45 1-1 1H7c-.55 0-1-.45-1-1v-2.34"></path><path d="M18 14.66V17c0 .55-.45 1-1 1h-2c-.55 0-1-.45-1-1v-2.34"></path><path d="M14 9V4a1 1 0 0 0-1-1h-2a1 1 0 0 0-1 1v5"></path></svg>
         Model Leaderboard
       </button>
       <button class="tab-btn" data-tab="insights">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 16V8a2 2 0 0 0-1-1.73l-7-4a2 2 0 0 0-2 0l-7 4A2 2 0 0 0 3 8v8a2 2 0 0 0 1 1.73l7 4a2 2 0 0 0 2 0l7-4A2 2 0 0 0 21 16z"></path><polyline points="3.27 6.96 12 12.01 20.73 6.96"></polyline><line x1="12" y1="22.08" x2="12" y2="12"></line></svg>
         Explainability & SHAP
       </button>
       <button class="tab-btn" data-tab="simulator">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
         What-If Scenario Planner
       </button>
       <button class="tab-btn" data-tab="api">
-        <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
         REST API
       </button>
     </nav>
@@ -410,7 +421,7 @@
 
           <div style="margin-bottom: 1.25rem;">
             <div style="font-size: 0.8rem; font-weight: 600; color: var(--accent-sand); margin-bottom: 0.4rem;">POST /predict</div>
-            <pre class="api-box"><code>curl -X POST "https://m5-forecasting-api.railway.app/predict" \
+            <pre class="api-box"><code>curl -X POST "http://localhost:8000/predict" \
   -H "Content-Type: application/json" \
   -d '{
     "store_id": "CA_1",
@@ -450,7 +461,7 @@ print("Mean 28-day forecast:", forecast["mean_forecast"])</code></pre>
   <!-- Footer -->
   <footer class="footer">
     <p>
-      <strong>Walmart M5 Multi-Model Demand Forecasting Engine</strong> · Built by <a href="https://github.com/Mudit-R" target="_blank">Mudit R</a>
+      <strong>Walmart M5 Multi-Model Demand Forecasting Engine</strong> · Developed by <a href="https://github.com/Mudit-R" target="_blank">Mudit R</a>
     </p>
     <p style="margin-top: 0.35rem; font-size: 0.75rem; color: var(--text-muted);">
       Datasets licensed under Kaggle M5 Forecasting Terms · MIT License
