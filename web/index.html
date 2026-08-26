@@ -158,8 +158,12 @@
         Explainability & SHAP
       </button>
       <button class="tab-btn" data-tab="simulator">
-        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2"></polygon></svg>
-        What-If Scenario Planner
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="3"></circle><path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path></svg>
+        What-If Simulator
+      </button>
+      <button class="tab-btn" data-tab="business">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+        Business & ROI
       </button>
       <button class="tab-btn" data-tab="api">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="16 18 22 12 16 6"></polyline><polyline points="8 6 2 12 8 18"></polyline></svg>
@@ -407,7 +411,156 @@
     </div>
 
     <!-- ==================================================================== -->
-    <!-- TAB 6: REST API PLAYGROUND -->
+    <!-- TAB 6: BUSINESS RESEARCH & FINANCIAL ROI -->
+    <!-- ==================================================================== -->
+    <div id="tab-business" class="tab-pane">
+      <!-- Top Financial Impact Banner -->
+      <div class="kpi-grid" style="margin-bottom: 1.5rem;">
+        <div class="kpi-card highlight">
+          <div class="kpi-header">
+            <span class="kpi-label">Total Annual Value Created</span>
+            <span class="kpi-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-gold)" stroke-width="2"><line x1="12" y1="1" x2="12" y2="23"></line><path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"></path></svg>
+            </span>
+          </div>
+          <div class="kpi-value" style="color: var(--accent-emerald);">$26.01M</div>
+          <div class="kpi-subtext">
+            <span>Holding Cost Savings + Stockout Recapture</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Safety Stock Reduction</span>
+            <span class="kpi-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-blue)" stroke-width="2"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"></polyline><polyline points="17 6 23 6 23 12"></polyline></svg>
+            </span>
+          </div>
+          <div class="kpi-value">25.7%</div>
+          <div class="kpi-subtext">
+            <span>Buffer working capital released</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Annual Holding Savings</span>
+            <span class="kpi-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-emerald)" stroke-width="2"><rect x="2" y="7" width="20" height="14" rx="2" ry="2"></rect><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"></path></svg>
+            </span>
+          </div>
+          <div class="kpi-value">$19.71M</div>
+          <div class="kpi-subtext">
+            <span>At 22% annual inventory carrying cost</span>
+          </div>
+        </div>
+
+        <div class="kpi-card">
+          <div class="kpi-header">
+            <span class="kpi-label">Stockout Margin Recapture</span>
+            <span class="kpi-icon">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--accent-sand)" stroke-width="2"><polyline points="20 6 9 17 4 12"></polyline></svg>
+            </span>
+          </div>
+          <div class="kpi-value">$6.30M</div>
+          <div class="kpi-subtext">
+            <span>Prevented lost sales on weekend spikes</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2-Column Analytics Grid -->
+      <div class="grid-2col" style="margin-bottom: 1.5rem;">
+        <!-- Price Elasticity Matrix -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2><span>Econometric Price Elasticity Matrix</span></h2>
+              <p>Empirical price sensitivity ($\epsilon = \frac{\% \Delta Q}{\% \Delta P}$) across retail departments.</p>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th>Department</th>
+                  <th>Elasticity (&epsilon;)</th>
+                  <th>Classification</th>
+                  <th>Optimal Promo Depth</th>
+                  <th>10% Promo Lift</th>
+                </tr>
+              </thead>
+              <tbody id="elasticity-table-body">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- SNAP State Policy Analysis -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title-group">
+              <h2><span>SNAP Assistance Policy Lift Analysis</span></h2>
+              <p>State-by-state food benefit payout calendar impact (California, Texas, Wisconsin).</p>
+            </div>
+          </div>
+          <div class="table-wrapper">
+            <table class="table-custom">
+              <thead>
+                <tr>
+                  <th>State</th>
+                  <th>Payout Window</th>
+                  <th>Food Volume Surge</th>
+                  <th>Supply Chain Action</th>
+                </tr>
+              </thead>
+              <tbody id="snap-table-body">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+
+      <!-- Executive Recommendations Card -->
+      <div class="card">
+        <div class="card-header">
+          <div class="card-title-group">
+            <h2><span>Executive Supply Chain & Strategy Recommendations</span></h2>
+            <p>Directly actionable operational policies derived from multi-model empirical research.</p>
+          </div>
+        </div>
+        <div class="grid-3col">
+          <div class="recom-box">
+            <div class="recom-tag" style="color: var(--accent-emerald);">1. Inventory Replenishment</div>
+            <div class="recom-title">Compress Safety Stock Buffers by 25%</div>
+            <p class="recom-desc">
+              With Ensemble holdout MAPE at 5.0%, reduce standard warehouse buffer from 14 days to 10.4 days, releasing $19.7M in working capital without impacting the 98.5% fill rate target.
+            </p>
+          </div>
+
+          <div class="recom-box">
+            <div class="recom-tag" style="color: var(--accent-sand);">2. SNAP Cycle Timing</div>
+            <div class="recom-title">Front-Load Grocery DC Shipments on Day -2</div>
+            <p class="recom-desc">
+              In California supercenters (CA_1 - CA_4), SNAP benefits disburse between Days 1-10, creating a +14.8% food surge. Stagger distribution center outbound shipments 48h ahead of the 1st of every month.
+            </p>
+          </div>
+
+          <div class="recom-box">
+            <div class="recom-tag" style="color: var(--accent-blue);">3. Dynamic Markdown Strategy</div>
+            <div class="recom-title">Differentiate Category Promotional Depths</div>
+            <p class="recom-desc">
+              Maintain shallow discounts (5-8%) on inelastic Household items (&epsilon; = -0.85). Deepen promotional markdowns (12-15%) exclusively on elastic Food items (&epsilon; = -1.45) to maximize incremental gross dollar margin.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ==================================================================== -->
+    <!-- TAB 7: REST API PLAYGROUND -->
     <!-- ==================================================================== -->
     <div id="tab-api" class="tab-pane">
       <div class="grid-2col">

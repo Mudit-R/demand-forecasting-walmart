@@ -1,0 +1,11 @@
+{
+    "annual_inventory_base_usd": 350000000,
+    "holding_cost_rate": "22% per annum",
+    "baseline_error_mape": 11.6,
+    "champion_error_mape": 5.0,
+    "error_reduction_pct": "56.9%",
+    "safety_stock_reduction": "25.6%",
+    "annual_holding_cost_savings_usd": "$19.71M / year",
+    "stockout_revenue_recapture_usd": "$6.30M / year",
+    "total_annual_economic_value": "$26.01M / year"
+}

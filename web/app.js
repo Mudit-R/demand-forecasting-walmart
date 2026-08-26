@@ -95,6 +95,7 @@ document.addEventListener("DOMContentLoaded", () => {
       else if (tabId === "leaderboard") renderLeaderboard();
       else if (tabId === "insights") renderInsights();
       else if (tabId === "simulator") renderSimulator();
+      else if (tabId === "business") renderBusinessTab();
       else if (tabId === "api") renderApiPlayground();
     }, 50);
   }
@@ -662,6 +663,36 @@ document.addEventListener("DOMContentLoaded", () => {
         link.click();
         document.body.removeChild(link);
       });
+    }
+  }
+
+  // --------------------------------------------------------------------------
+  // 7. Business Strategy & Financial ROI
+  // --------------------------------------------------------------------------
+  function renderBusinessTab() {
+    const elTable = document.getElementById("elasticity-table-body");
+    if (elTable && M5_DATA.priceElasticity) {
+      elTable.innerHTML = M5_DATA.priceElasticity.map(row => `
+        <tr>
+          <td style="font-weight:600; color:#fff;">${row.category}</td>
+          <td style="font-family:var(--font-mono); color:var(--accent-gold); font-weight:700;">${row.elasticity}</td>
+          <td><span class="badge-tag" style="background:${row.elasticity < -1.2 ? 'rgba(16, 185, 129, 0.15)' : 'rgba(59, 130, 246, 0.15)'}; color:${row.elasticity < -1.2 ? '#10b981' : '#60a5fa'}; border-color:transparent;">${row.interpretation}</span></td>
+          <td style="font-family:var(--font-mono);">${row.optimal_discount_range}</td>
+          <td style="font-weight:600; color:#10b981;">${row.revenue_impact_per_10pct_discount}</td>
+        </tr>
+      `).join("");
+    }
+
+    const snapTable = document.getElementById("snap-table-body");
+    if (snapTable && M5_DATA.snapPolicy) {
+      snapTable.innerHTML = M5_DATA.snapPolicy.map(row => `
+        <tr>
+          <td style="font-weight:600; color:#fff;">${row.state}</td>
+          <td style="font-family:var(--font-mono); color:var(--accent-sand);">${row.payout_window}</td>
+          <td style="font-weight:700; color:#10b981;">${row.food_volume_lift}</td>
+          <td style="font-size:0.82rem; color:var(--text-secondary);">${row.strategic_action}</td>
+        </tr>
+      `).join("");
     }
   }
 
