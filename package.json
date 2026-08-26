@@ -1,0 +1,27 @@
+{
+  "name": "demand-forecasting-walmart",
+  "version": "1.0.0",
+  "description": "Walmart M5 Demand Forecasting — Multi-Model Forecasting System and Interactive Executive Dashboard",
+  "main": "web/index.html",
+  "scripts": {
+    "dev": "python -m http.server 3000 --directory web",
+    "start": "python -m http.server 3000 --directory web",
+    "dashboard:streamlit": "streamlit run dashboard/app.py",
+    "api": "uvicorn src.api.app:app --reload --port 8000",
+    "seed": "python scripts/seed_results.py"
+  },
+  "keywords": [
+    "walmart",
+    "m5-forecasting",
+    "time-series",
+    "machine-learning",
+    "lightgbm",
+    "temporal-fusion-transformer",
+    "chronos",
+    "prophet",
+    "sarima",
+    "vercel-dashboard"
+  ],
+  "author": "Mudit R",
+  "license": "MIT"
+}
