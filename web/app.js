@@ -62,10 +62,10 @@ document.addEventListener("DOMContentLoaded", () => {
   };
 
   // --------------------------------------------------------------------------
-  // Tab Navigation
+  // Tab & Accordion Navigation
   // --------------------------------------------------------------------------
   function initTabs() {
-    const tabButtons = document.querySelectorAll(".tab-btn");
+    const tabButtons = document.querySelectorAll(".workbench-tab-btn, .tab-btn");
     tabButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         const target = btn.getAttribute("data-tab");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tabButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        document.querySelectorAll(".tab-pane").forEach(pane => {
+        document.querySelectorAll(".workbench-pane, .tab-pane").forEach(pane => {
           pane.classList.remove("active");
         });
 
@@ -84,6 +84,31 @@ document.addEventListener("DOMContentLoaded", () => {
           state.currentTab = target;
           renderCurrentTab(target);
         }
+      });
+    });
+  }
+
+  function initAccordions() {
+    const items = document.querySelectorAll(".accordion-item");
+    items.forEach(item => {
+      const header = item.querySelector(".accordion-header");
+      if (header) {
+        header.addEventListener("click", () => {
+          const isActive = item.classList.contains("active");
+          items.forEach(i => i.classList.remove("active"));
+          if (!isActive) {
+            item.classList.add("active");
+          }
+        });
+      }
+
+      const subPills = item.querySelectorAll(".sub-pill-btn");
+      subPills.forEach(pill => {
+        pill.addEventListener("click", (e) => {
+          e.stopPropagation();
+          subPills.forEach(p => p.classList.remove("active"));
+          pill.classList.add("active");
+        });
       });
     });
   }
@@ -698,6 +723,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Initialize Application
   initTabs();
+  initAccordions();
   initControls();
   renderForecastExplorer();
 });
