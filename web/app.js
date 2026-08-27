@@ -65,7 +65,7 @@ document.addEventListener("DOMContentLoaded", () => {
   // Tab & Accordion Navigation
   // --------------------------------------------------------------------------
   function initTabs() {
-    const tabButtons = document.querySelectorAll(".workbench-tab-btn, .tab-btn");
+    const tabButtons = document.querySelectorAll(".dash-tab-btn, .workbench-tab-btn, .tab-btn");
     tabButtons.forEach(btn => {
       btn.addEventListener("click", () => {
         const target = btn.getAttribute("data-tab");
@@ -74,7 +74,7 @@ document.addEventListener("DOMContentLoaded", () => {
         tabButtons.forEach(b => b.classList.remove("active"));
         btn.classList.add("active");
 
-        document.querySelectorAll(".workbench-pane, .tab-pane").forEach(pane => {
+        document.querySelectorAll(".dash-pane, .workbench-pane, .tab-pane").forEach(pane => {
           pane.classList.remove("active");
         });
 
